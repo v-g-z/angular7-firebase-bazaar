@@ -1,0 +1,10 @@
+<mat-toolbar color="accent">
+  <a *ngIf="!(isauth$ | async)" mat-button routerLink="/login">Login</a>
+  <ng-template [ngIf]="isauth$ | async">
+    <!-- <li><a routerLink="/signup">Register</a></li> -->
+    <a mat-button routerLink="/administration">Verwaltung</a>
+    <a mat-button (click)="logout()">Logout</a>
+  </ng-template>
+
+</mat-toolbar>
+isAuth: {{isauth$ | async}}
