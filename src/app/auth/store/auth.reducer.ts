@@ -10,9 +10,7 @@ const initiaState: State = {
     user: null,
     authenticated: false
 };
-//  const initiaState = new User(null, 'GUEST', null, null);
 
-/// Reducer function
 export function authReducer(state = initiaState, action: AuthActions.AuthActions) {
     switch (action.type) {
 
@@ -30,6 +28,9 @@ export function authReducer(state = initiaState, action: AuthActions.AuthActions
             return { ...state, ...initiaState };
 
         case AuthActions.AuthActionTypes.GOOGLE_LOGIN:
+            return { ...state };
+
+        case AuthActions.AuthActionTypes.REGISTER_EMAIL_PASSWORD:
             return { ...state };
 
         case AuthActions.AuthActionTypes.AUTH_ERROR:

@@ -1,3 +1,10 @@
-<p>
-  dashboard works!
-</p>
+<ul *ngIf="!(selectedBazaar$ | async)">
+  <li class="text" *ngFor="let bazaar of bazaars$ | async">
+    <button matButton mat-raised-button (click)="select(bazaar)">{{ bazaar.title }}</button> (Anz. Verkäufer: {{ bazaar.nbOfVendors }}) json: {{ bazaar.vendors }}
+  </li>
+</ul>
+<div fxLayout="column" fxLayoutAlign="space-between stretch">
+  <app-cart *ngIf="(selectedBazaar$ | async)"></app-cart>
+  <div style="height: 20px;"></div>
+  <app-protocol *ngIf="(selectedBazaar$ | async)"></app-protocol>
+</div>

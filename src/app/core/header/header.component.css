@@ -1,0 +1,9 @@
+
+mat-icon {
+    cursor: pointer;
+  }
+
+  .second-tool-bar-row {
+    height: 15px;
+    font-size: 0.5em;
+  }

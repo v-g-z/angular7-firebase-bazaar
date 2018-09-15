@@ -1,0 +1,49 @@
+<section >
+  <mat-card fxFlex.xs="100%">
+
+    <mat-card-title>Eingaben</mat-card-title>
+    <mat-card-content  fxLayout="column" fxLayoutAlign="space-between start"  fxLayoutGap="35px">
+      <form fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="25px" [formGroup]="cartForm" (ngSubmit)="addToCart()">
+        <mat-form-field class="example-full-width">
+          <span matPrefix>Nr: &nbsp;</span>
+          <input type="number" matInput placeholder="" formControlName="vendor" min="1" max="80" required>
+          <mat-hint align="start">
+            <strong>Verkäufernummer: 1 - {{ (selectedBazaar$ | async).nbOfVendors }}</strong>
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <span matPrefix>Preis: &nbsp;</span>
+          <input type="number" matInput placeholder="" formControlName="price" required>
+          <!-- <mat-icon matSuffix>library_add</mat-icon> -->
+          <span matSuffix>€</span>
+          <mat-hint align="start">
+            <strong>Artikelpreis</strong>
+          </mat-hint>
+        </mat-form-field>
+        <span fxFill fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="start start">
+          <button matButton type="submit" mat-raised-button [disabled]="cartForm.invalid">OK</button>
+        </span>
+      </form>
+      <mat-divider></mat-divider>
+      <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="25px">
+        <div fxLayout="column" fxLayoutAlign="space-between center">
+            <span>Summe:</span>
+          <span>{{total | currency: '€'}}</span>
+          <button matButton mat-raised-button [disabled]="!total" (click)="payment()">bezahlen</button>
+        </div>
+        <div *ngFor="let item of cart" fxLayout="column" fxLayoutAlign="space-around center" class="border-left border-warning text-center"
+          style="min-width: 75px;">
+          <span>{{item.vendor}}</span>
+          <span>{{item.price | currency : '€'}}</span>
+            <button matButton mat-raised-button color="warn" (click)="removeFromCart(item)">X</button>
+        </div>
+        {{paymentError}}
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</section>
+<!-- <ul *ngFor="let cartItem of cartItems$ | async">
+  <li>Nr: {{ cartItem.vendor}} -> {{ cartItem.price }}€</li>
+</ul> -->
+<!-- cartItems: {{ cartItems$ | async | json }} -->

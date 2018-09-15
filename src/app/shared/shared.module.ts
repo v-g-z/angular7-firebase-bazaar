@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 // firebase
 // https://github.com/angular/angularfire2/blob/master/docs/install-and-setup.md
@@ -17,6 +19,7 @@ import { environment } from '../../environments/environment';
   imports: [
     CommonModule,
     MaterialModule,
+    FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase), // imports firebase/app needed for everything
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     // AngularFireStorageModule, // imports firebase/storage only needed for storage features
@@ -24,7 +27,9 @@ import { environment } from '../../environments/environment';
   ],
   exports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule,
+    ReactiveFormsModule
   ],
   providers: [
   ]

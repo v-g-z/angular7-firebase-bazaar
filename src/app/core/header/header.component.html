@@ -1,10 +1,45 @@
 <mat-toolbar color="accent">
-  <a *ngIf="!(isauth$ | async)" mat-button routerLink="/login">Login</a>
-  <ng-template [ngIf]="isauth$ | async">
-    <!-- <li><a routerLink="/signup">Register</a></li> -->
-    <a mat-button routerLink="/administration">Verwaltung</a>
-    <a mat-button (click)="logout()">Logout</a>
-  </ng-template>
+  <mat-toolbar-row>
+    <ng-template [ngIf]="!(isauth$ | async)">
+      <span>Basar Abrechnungsprogramm</span>
+      <span class="fx-fill-remaining"></span>
 
+      <!-- <li><a routerLink="/signup">Register</a></li> -->
+      <a mat-button routerLink="/login">Login</a>
+    </ng-template>
+    <ng-template [ngIf]="(isauth$ | async)">
+      <mat-icon *ngIf="(selectedBazaar$ | async)" matTooltip="Zum Dashboard: Eingabe der Daten" matTooltipPosition="right" (click)="routeToDashboard()">dashboard</mat-icon>
+      <span *ngIf="!(selectedBazaar$ | async)">Basar Abrechnungsprogramm</span>
+
+      <span>{{ (selectedBazaar$ | async)?.title }}</span>
+      <span class="fx-fill-remaining"></span>
+      <!-- <span *ngIf="(bazaars$ | async)?.length > 0">
+        <button mat-button [matMenuTriggerFor]="menu">Basare</button>
+        <mat-menu #menu="matMenu" *ngFor="let bazaar of bazaars$ | async">
+          <button mat-menu-item (click)="select(bazaar)">{{ bazaar.title }}</button>
+        </mat-menu>
+      </span> -->
+      <mat-form-field style="font-size: 0.7em; top: 5px;">
+          <mat-select placeholder="Basare"  (selectionChange)="select($event)">
+            <mat-option *ngFor="let bazaar of bazaars$ | async" [value]="bazaar" >
+              {{bazaar.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      <a mat-button *ngIf="(selectedBazaar$ | async)" routerLink="/report">Ergebnis</a>
+      <a mat-button routerLink="/administration">Verwaltung</a>
+      <a mat-button (click)="logout()">Logout</a>
+    </ng-template>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="second-tool-bar-row">
+    <span *ngIf="(selectedBazaar$ | async)">
+      Anzahl Verkäufer: {{ (selectedBazaar$ | async).nbOfVendors }} | Gebühr: {{ (selectedBazaar$ | async).fee | currency: "€"
+      }} | Marge: {{ (selectedBazaar$ | async).margin }} %
+    </span>
+    <span class="fx-fill-remaining"></span>
+
+    <span *ngIf="(selectedBazaar$ | async)">Umsatz: {{ turnover | currency: "€" }} | Gewinn: {{ (turnover * (selectedBazaar$ | async).margin / 100) | currency: "€"
+      }} </span>
+
+  </mat-toolbar-row>
 </mat-toolbar>
-isAuth: {{isauth$ | async}}

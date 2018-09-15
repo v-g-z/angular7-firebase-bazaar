@@ -9,17 +9,8 @@ import { Observable, of, from } from 'rxjs';
 
 import { catchError, map, mapTo, switchMap, mergeMap } from 'rxjs/operators';
 
-// import 'rxjs/add/observable/fromPromise';
-// import 'rxjs/add/observable/of';
-
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/switchMap';
-// import 'rxjs/add/operator/catch';
-// import 'rxjs/add/operator/delay';
-
 
 import * as AuthActions from './auth.actions';
-// export type Action = userActions.All;
 
 
 @Injectable()
@@ -60,6 +51,21 @@ export class AuthEffects {
         );
 
     @Effect()
+    register: Observable<AuthActions.AuthActions> = this.actions$.ofType(AuthActions.AuthActionTypes.REGISTER_EMAIL_PASSWORD)
+        .pipe(
+            map((action: AuthActions.RegisterEmailPassword) => action.payload)
+            , switchMap(payload => {
+                return from(this.registerEmailPassword(payload));
+            })
+            , map(credential => {
+                console.log('in auth effects.login - credential', credential);
+                // successful login
+                return new AuthActions.GetUser();
+            })
+            , catchError(err => of(new AuthActions.AuthError({ error: err.message })))
+        );
+
+    @Effect()
     logout: Observable<AuthActions.AuthActions> = this.actions$.ofType(AuthActions.AuthActionTypes.LOGOUT)
         .pipe(
             map((action: AuthActions.Logout) => action.payload)
@@ -75,13 +81,18 @@ export class AuthEffects {
 
 
 
+    // private registerEmailPassword(): firebase.Promise<any> {
+        private registerEmailPassword(payload) {
+            return this.afAuth.auth.createUserWithEmailAndPassword(payload.email, payload.password)
+        }
+    
     // private googleLogin(): firebase.Promise<any> {
-    private googleLogin() {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        return this.afAuth.auth.signInWithPopup(provider);
-    }
-
-
+        private googleLogin() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            return this.afAuth.auth.signInWithPopup(provider);
+        }
+    
+        
     constructor(private actions$: Actions, private afAuth: AngularFireAuth) { }
 
 }

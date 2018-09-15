@@ -1,4 +1,11 @@
+import {LOCALE_ID} from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe);
+
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -11,6 +18,7 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { AuthEffects } from './auth/store/auth.effects';
 import { environment } from '../environments/environment';
+import { BazaarEffects } from './core/dashboard/store/bazaar.effects';
 
 @NgModule({
   declarations: [
@@ -18,16 +26,19 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SharedModule,
     CoreModule,
     EffectsModule.forRoot([
-      AuthEffects
+      AuthEffects, BazaarEffects
     ]),
     StoreModule.forRoot(reducers),
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'de-DE' },
+ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

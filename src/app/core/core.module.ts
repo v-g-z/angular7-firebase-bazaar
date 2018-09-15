@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
@@ -10,6 +11,9 @@ import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from '../auth/login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdministrationComponent } from '../administration/administration.component';
+import { CartComponent } from './dashboard/cart/cart.component';
+import { ProtocolComponent } from './dashboard/protocol/protocol.component';
+import { ReportComponent } from './dashboard/report/report.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,10 @@ import { AdministrationComponent } from '../administration/administration.compon
     LandingComponent,
     LoginComponent,
     DashboardComponent,
-    AdministrationComponent
+    AdministrationComponent,
+    CartComponent,
+    ProtocolComponent,
+    ReportComponent
   ],
   imports: [
     SharedModule,
@@ -26,6 +33,6 @@ import { AdministrationComponent } from '../administration/administration.compon
   exports: [
     AppRoutingModule,
     HeaderComponent
-  ],
+  ]
 })
 export class CoreModule {}
