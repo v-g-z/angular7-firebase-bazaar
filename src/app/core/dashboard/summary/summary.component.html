@@ -1,0 +1,13 @@
+<div class="summary"  *ngIf="(selectedBazaar$ | async)">
+<span>
+  Anzahl Verkäufer: {{ (selectedBazaar$ | async).nbOfVendors }} | Gebühr: {{ (selectedBazaar$ | async).fee | currency: "€"
+  }} | Marge: {{ (selectedBazaar$ | async).margin }} %
+</span>
+<span class="fx-fill-remaining"></span>
+
+<span>
+  Umsatz: {{ turnover | currency: "€" }} | 
+  Gewinn: {{ (turnover * (selectedBazaar$ | async).margin / 100) | currency: "€" }} |
+</span>
+
+</div>

@@ -1,0 +1,10 @@
+.gap {
+    margin: 20px;
+}
+
+
+.mat-tab-label {
+    font-size: 24px !important;
+    font-weight: 400 !important;
+    color: black;
+}

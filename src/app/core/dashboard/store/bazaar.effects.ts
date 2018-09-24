@@ -11,9 +11,28 @@ import { Observable, of, from, observable } from 'rxjs';
 import { catchError, map, mapTo, switchMap, mergeMap } from 'rxjs/operators';
 
 import * as BazaarActions from './bazaar.actions';
+import { Action } from '@ngrx/store';
+import { IBazaarId } from '../../models/bazaar.model';
 
 @Injectable()
 export class BazaarEffects {
+
+    @Effect() query$: Observable<Action> = this.actions$.ofType(BazaarActions.BazaarActionTypes.QUERY).pipe(
+        switchMap(action => {
+            const ref = this.afs.collection<IBazaarId>('bazaars');
+            return ref.snapshotChanges().pipe(
+                map(arr => {
+                return arr.map(doc => {
+                    const data = doc.payload.doc.data();
+                    return { id: doc.payload.doc.id, ...data } as IBazaarId;
+                });
+            }));
+        }),
+        map(arr => {
+            console.log(arr);
+            return new BazaarActions.AddAll(arr);
+        }));
+
 
     // @Effect()
     // fetchBazaar: Observable<BazaarActions.BazaarActions> = this.actions$.ofType(BazaarActions.BazaarActionTypes.FETCH_BAZAAR)

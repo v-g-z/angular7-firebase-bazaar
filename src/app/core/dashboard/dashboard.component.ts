@@ -17,36 +17,10 @@ import { IBazaar, IBazaarId } from '../models/bazaar.model';
 export class DashboardComponent implements OnInit {
   selectedBazaar$: Observable<IBazaar>;
 
-  // private bazaarCollection: AngularFirestoreCollection<IBazaar>;
-  // bazaars$: Observable<IBazaarId[]>;
-
-  constructor(private afs: AngularFirestore, private store: Store<fromApp.AppState>) {}
+  constructor(private afs: AngularFirestore, private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
-    // /**
-    //  * select list of bazaars
-    //  */
-    // this.bazaarCollection = this.afs.collection<IBazaar>('bazaars');
-    // this.bazaars$ = this.bazaarCollection.snapshotChanges().pipe(
-    //   map(actions => actions.map(a => {
-    //     const data = a.payload.doc.data() as IBazaar;
-    //     const id = a.payload.doc.id;
-    //     return { id, ...data };
-        
-    //   }))
-    // );
-
     this.selectedBazaar$ = this.store.select(fromApp.getSelectedBazaar);
-
   }
-
-  // select(bazaar: IBazaarId): void {
-  //   // hier über state und effects
-  //   console.log('id', bazaar.id);
-  //   console.log('bazaar', bazaar);
-  //   this.store.dispatch(new BazaarActions.SetSelectedBazaar(bazaar));
-
-
-  // }
 
 }

@@ -1,14 +1,14 @@
-<section fxFill fxLayout fxLayoutAlign="center" >
-    <mat-card fxFlex.xs="100%" >
+<section fxLayout="column" fxLayoutAlign="space-between start"  fxLayoutGap="5px" >
+    <!-- <mat-card fxFlex.xs="100%" >
   
       <mat-card-title>Protokoll</mat-card-title>
-      <mat-card-content  fxLayout="column" fxLayoutAlign="space-between start"  fxLayoutGap="5px">
+      <mat-card-content  fxLayout="column" fxLayoutAlign="space-between start"  fxLayoutGap="5px"> -->
   
 <div *ngFor="let protocol of protocol$ | async" style="font-size: 0.8em;">
   {{protocol.user}} - {{protocol?.createdAt?.toDate() | date:'dd.MM.yyyy HH:mm:ss'}} - ({{protocol.sum | currency : "€"}}) |
   <span *ngFor="let items of protocol.cartItems">{{items.vendor}} ({{items.price | currency : '€'}}) |</span>
 </div>
 
-</mat-card-content>
-</mat-card>
+<!-- </mat-card-content>
+</mat-card> -->
 </section>

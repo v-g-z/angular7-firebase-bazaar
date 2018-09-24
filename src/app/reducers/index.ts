@@ -19,4 +19,4 @@ export const getUser = createSelector(getAuthState, fromAuth.getUser);
 
 export const getBazaarState = createFeatureSelector<fromBazaar.State>('bazaar');
 export const getSelectedBazaar = createSelector(getBazaarState, fromBazaar.getSelectedBazaar);
-// export const getBazaars = createSelector(getBazaarState, fromBazaar.getBazaars);
+export const getBazaars = createSelector(getBazaarState, fromBazaar.getBazaars);

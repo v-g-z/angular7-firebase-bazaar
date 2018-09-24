@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromApp from '../../reducers/index';
-import { User } from '../models/user.model';
 import { State } from '../store/auth.reducer';
 import * as AuthActions from '../store/auth.actions';
 import { FormGroup } from '@angular/forms';
@@ -25,7 +24,7 @@ export class LoginComponent implements OnInit {
       if (state.authenticated) {
         this.router.navigateByUrl('dashboard');
       }
-    })
+    });
 
   }
 

@@ -52,8 +52,8 @@ export class ReportComponent implements OnInit {
       }).valueChanges();
 
       this.cartItems$.subscribe(cartItems => {
-        var res2 = [];
-        var res1 = [];
+        let res2 = [];
+        let res1 = [];
         for (let item of cartItems) {
           if (!res1[item.vendor]) {
             res1[item.vendor] = {

@@ -14,6 +14,7 @@ import { AdministrationComponent } from '../administration/administration.compon
 import { CartComponent } from './dashboard/cart/cart.component';
 import { ProtocolComponent } from './dashboard/protocol/protocol.component';
 import { ReportComponent } from './dashboard/report/report.component';
+import { SummaryComponent } from './dashboard/summary/summary.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ReportComponent } from './dashboard/report/report.component';
     AdministrationComponent,
     CartComponent,
     ProtocolComponent,
-    ReportComponent
+    ReportComponent,
+    SummaryComponent
   ],
   imports: [
     SharedModule,
