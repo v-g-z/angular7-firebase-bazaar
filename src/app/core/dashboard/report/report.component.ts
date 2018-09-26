@@ -37,59 +37,54 @@ export class ReportComponent implements OnInit {
 
     this.selectedBazaar$.subscribe(bazaar => {
 
-      if (!bazaar.id) {
-        this.router.navigateByUrl('dashboard');
-      }
+      if (bazaar) {
+        let itemDoc: AngularFirestoreDocument<any>;
+        itemDoc = this.afs.doc<any>('bazaars/' + bazaar.id);
 
-      let itemDoc: AngularFirestoreDocument<any>;
-      itemDoc = this.afs.doc<any>('bazaars/' + bazaar.id);
+        this.cartItems$ = itemDoc.collection<any>('cartItems', ref => {
+          let query: firebase.firestore.Query = ref;
+          query = query.orderBy('vendor');
+          return query;
 
-      this.cartItems$ = itemDoc.collection<any>('cartItems', ref => {
-        let query: firebase.firestore.Query = ref;
-        query = query.orderBy('vendor');
-        return query;
+        }).valueChanges();
 
-      }).valueChanges();
+        this.cartItems$.subscribe(cartItems => {
+          // let res2 = [];
+          const res1 = [];
+          for (const item of cartItems) {
+            if (!res1[item.vendor]) {
+              res1[item.vendor] = {
+                vendor: item.vendor,
+                sum: 0,
+                price: []
+              };
+              // res2.push(res1[item.vendor])
+            }
 
-      this.cartItems$.subscribe(cartItems => {
-        let res2 = [];
-        let res1 = [];
-        for (let item of cartItems) {
-          if (!res1[item.vendor]) {
-            res1[item.vendor] = {
-              vendor: item.vendor,
-              sum: 0,
-              price: []
-            };
-            // res2.push(res1[item.vendor])
+            res1[item.vendor].price.push(item.price);
+            res1[item.vendor].sum += item.price;
+
+
           }
 
-          res1[item.vendor].price.push(item.price);
-          res1[item.vendor].sum += item.price;
 
+          for (let index = 1; index <= bazaar.nbOfVendors; index++) {
+            if (!res1[index]) {
+              res1[index] = {
+                vendor: index,
+                sum: 0,
+                price: []
+              };
+            }
+          }
 
-        }
-        console.log("und hier das resutl", res1);
+          this.vendorItems = res1;
 
+        });
 
-        for (let index = 1; index <= bazaar.nbOfVendors; index++) {
-          if (!res1[index]) {
-            res1[index] = {
-              vendor: index,
-              sum: 0,
-              price: []
-            };
-          }  
-        }
+      }
 
-        this.vendorItems = res1;
-        console.log("vendorItems", this.vendorItems);
-
-
-      });
-
-
-    })
+    });
   }
 
   download() {

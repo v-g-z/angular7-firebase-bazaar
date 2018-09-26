@@ -1,14 +1,31 @@
-<section fxLayout="column" fxLayoutAlign="space-between start"  fxLayoutGap="5px" >
-    <!-- <mat-card fxFlex.xs="100%" >
+<section fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="5px">
+  <!-- <mat-card fxFlex.xs="100%" >
   
       <mat-card-title>Protokoll</mat-card-title>
       <mat-card-content  fxLayout="column" fxLayoutAlign="space-between start"  fxLayoutGap="5px"> -->
-  
-<div *ngFor="let protocol of protocol$ | async" style="font-size: 0.8em;">
-  {{protocol.user}} - {{protocol?.createdAt?.toDate() | date:'dd.MM.yyyy HH:mm:ss'}} - ({{protocol.sum | currency : "€"}}) |
-  <span *ngFor="let items of protocol.cartItems">{{items.vendor}} ({{items.price | currency : '€'}}) |</span>
-</div>
+  <table class="p-table">
+    <tr class="trow-head">
+        <th>#</th>
+        <th>Name</th>
+        <th>Zeitpunkt</th>
+      <th>Summe<br>Einnahmen</th>
+      <th>Einzelpositionen</th>
+    </tr>
+    <tr class="trow-data" *ngFor="let protocol of protocol$ | async" style="font-size: 0.8em;" >
+      <td>{{protocol.user}}</td>
+      <td>{{protocol?.createdAt?.toDate() | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+      <td style="text-align: right;">{{protocol.sum | currency : "€"}}</td>
+      <td  style="width:100%;  overflow:auto">
+        <!-- <table><tr class="d-items"> -->
 
-<!-- </mat-card-content>
+        
+        <span class="d-items" *ngFor="let items of protocol.cartItems" >
+          <span style="float: left; border-right: 0.7px solid #ffd740;">Nr: {{items.vendor}}<br>{{items.price | currency : '€'}}</span>
+        </span>
+      <!-- </tr></table> -->
+      </td>
+    </tr>
+  </table>
+  <!-- </mat-card-content>
 </mat-card> -->
 </section>

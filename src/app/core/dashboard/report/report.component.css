@@ -8,14 +8,14 @@
 
 .outer-c {
     font-size: 0.7em; 
-    border: 1px solid red; 
+    border: 1px solid #ffd740; 
     padding: 3px; 
     min-width: 70px;
     margin: 1px;
 }
 
 .item-headline {
-    background-color: red;
+    background-color: #ffd740;
     width: 100%;
     text-align: center;
     height: 20px;
@@ -37,7 +37,7 @@
 }
 
 .color {
-    background-color: red;
+    background-color: #ffd740;
 }
 
 .top {

@@ -13,6 +13,13 @@ html, body {
   .fx-fill-remaining {
     flex: 1 1 auto;
 }
+.mat-spinner circle {
+  stroke: #ffd740;
+}
+
+.gap {
+  margin: 20px;
+}
 
 mat-card-content {
     display: flex;

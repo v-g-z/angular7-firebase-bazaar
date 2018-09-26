@@ -1,0 +1,62 @@
+section {
+    width: 100%;
+}
+
+.p-table {
+    width: 100%;
+    border: 0.6px solid #cfcfcf;
+}
+
+tr.trow-head > th {
+    font-weight: 500;
+    color: black;
+    background: #ffd740;
+    padding: 10px 20px 10px 20px;
+    text-align: center;
+    height: 20px;
+    /* padding-top: 7px;
+    font-weight: bold;
+    color: white; */
+}
+
+tr.trow-data > td {
+    padding: 5px 20px 5px 20px;
+    /* width: 100%; */
+}
+
+tr.trow-data > td:last-child {
+    width: 100%;
+}
+
+span.d-items > span {
+    text-align: center;
+    border-right: 0.7px solid #ffd740;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+span.d-items > span:first-child {
+    padding-right: 5px;
+}
+
+span.d-items > span:last-child {
+    padding-left: 5px;
+    border-right: 0px solid red;
+
+}
+
+
+tr.d-items > td {
+    text-align: center;
+    border-right: 0.7px solid #ffd740;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+tr.d-items > td:first-child {
+    padding-right: 5px;
+}
+
+tr.d-items > td:last-child {
+    padding-left: 5px;
+    border-right: 0px solid red;
+
+}

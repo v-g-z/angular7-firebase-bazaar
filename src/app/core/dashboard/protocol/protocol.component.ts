@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 import * as fromApp from '../../../reducers/index';
 import { Observable } from 'rxjs';
 import { IBazaar, IBazaarId } from '../../models/bazaar.model';
-import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
 import { IProtocolId } from '../../models/protocol.model';
 
 
@@ -24,23 +24,23 @@ export class ProtocolComponent implements OnInit {
 
   ngOnInit() {
     this.selectedBazaar$ = this.store.select(fromApp.getSelectedBazaar);
-console.log('in protocol');
+
     this.selectedBazaar$.subscribe(bazaar => {
-      console.log('in protocol subscribe');
+      if (bazaar) {
+        let itemDoc: AngularFirestoreDocument<any>;
+        itemDoc = this.afs.doc<any>('bazaars/' + bazaar.id);
+        // itemDoc.valueChanges();
+        // console.log('valueChanges', itemDoc);
+        // this.cartItems$ = itemDoc.collection<any>('cartItems').valueChanges();
 
-      let itemDoc: AngularFirestoreDocument<any>;
-                itemDoc = this.afs.doc<any>('bazaars/'+bazaar.id);
-                // itemDoc.valueChanges();
-                // console.log('valueChanges', itemDoc);
-                // this.cartItems$ = itemDoc.collection<any>('cartItems').valueChanges();
+        this.protocol$ = itemDoc.collection<any>('protocol', ref => {
+          let query: firebase.firestore.Query = ref;
+          query = query.orderBy('createdAt', 'desc').limit(30);
+          return query;
 
-                this.protocol$ = itemDoc.collection<any>('protocol', ref => {
-                  let query : firebase.firestore.Query = ref;
-                  query = query.orderBy('createdAt', 'desc').limit(30);
-                  return query;
-          
-                }).valueChanges();
-    })
+        }).valueChanges();
+      }
+    });
   }
 
 

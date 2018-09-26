@@ -19,6 +19,7 @@ import { CoreModule } from './core/core.module';
 import { AuthEffects } from './auth/store/auth.effects';
 import { environment } from '../environments/environment';
 import { BazaarEffects } from './core/dashboard/store/bazaar.effects';
+import { SnackbarEffects } from './shared/snackbar/snackbar.effects';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { BazaarEffects } from './core/dashboard/store/bazaar.effects';
     SharedModule,
     CoreModule,
     EffectsModule.forRoot([
-      AuthEffects, BazaarEffects
+      AuthEffects, BazaarEffects, SnackbarEffects
     ]),
     StoreModule.forRoot(reducers),
     StoreRouterConnectingModule.forRoot(),

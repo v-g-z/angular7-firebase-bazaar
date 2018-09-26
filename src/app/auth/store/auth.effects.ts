@@ -24,7 +24,7 @@ export class AuthEffects {
             , map(authData => {
                 if (authData) {
                     /// User logged in
-                    const user = new User(authData.uid, authData.displayName, authData.emailVerified, authData.photoURL);
+                    const user = new User(authData.uid, authData.displayName, authData.email, authData.emailVerified, authData.photoURL);
                     return new AuthActions.Authenticated(user);
                 } else {
                     /// User not logged in

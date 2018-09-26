@@ -1,6 +1,6 @@
-<section fxFill fxLayout fxLayoutAlign="center" style="height:100vh;">
-  <mat-card fxFlex.xs="100%">
-    <mat-card-title>Basar Administration</mat-card-title>
+<section fxFill fxLayout fxLayoutAlign="center" fxLayoutGap="20px" style="height:100vh;">
+  <mat-card fxFlex.xs="100%" class="gap">
+    <mat-card-title>Deine Basardaten</mat-card-title>
     <mat-card-subtitle>Du bist der Admin für diesen Basar. Nur du kannst diese Daten bearbeiten.</mat-card-subtitle>
     <mat-card-content>
       <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="25px" [formGroup]="bazaarForm" (ngSubmit)="onSubmit()">
@@ -25,9 +25,11 @@
               <mat-error>Bitte gib eine Zahl an</mat-error>
             </mat-form-field>
               <span fxFill fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="start start">
-          <button matButton type="submit" mat-raised-button [disabled]="bazaarForm.invalid">Speichern</button>
+                  <mat-spinner *ngIf="(isLoading$ | async)"></mat-spinner>
+          <button matButton *ngIf="!(isLoading$ | async)" type="submit" mat-raised-button [disabled]="bazaarForm.invalid">Speichern</button>
         </span>
       </form>
     </mat-card-content>
   </mat-card>
 </section>
+<app-invite *ngIf="selectedBazaar$ | async"></app-invite>

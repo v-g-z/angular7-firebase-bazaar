@@ -21,14 +21,14 @@ export class CartComponent implements OnInit {
   bazaarId: String;
   selectedBazaar$: Observable<IBazaarId>;
 
-  // cartItems$: Observable<ICartItem[]>;
-  // cartItemCollection;//: AngularFirestoreCollection<ICartItemId[]>;
-  total: number = 0;
+  isLoading = false;
+
+  total = 0;
 
   paymentError: String = "";
 
 
-  cart: ICartItem[] = [];;
+  cart: ICartItem[] = [];
   //  = [
   //   { vendor: 12, price: 10.20 },
   //   { vendor: 32, price: 2 },
@@ -44,29 +44,10 @@ export class CartComponent implements OnInit {
     this.selectedBazaar$ = this.store.select(fromApp.getSelectedBazaar);
 
     this.selectedBazaar$.subscribe(bazaar => {
-      this.bazaarId = bazaar.id;
-
-    //   let itemDoc: AngularFirestoreDocument<any>;
-    //   itemDoc = this.afs.doc<any>('bazaars/' + bazaar.id);
-    //   // itemDoc.valueChanges();
-    //   console.log('valueChanges', itemDoc);
-
-    //   // this.cartItemCollection = itemDoc.collection<ICartItem>('cartItems', ref => {
-    //   //   let query: firebase.firestore.Query = ref;
-    //   //   query = query.orderBy('vendor');
-    //   //   return query;
-
-    //   // });
-    //   // this.cartItems$ = this.cartItemCollection.valueChanges();
-
-    //   this.cartItems$ = itemDoc.collection<any>('cartItems', ref => {
-    //     let query: firebase.firestore.Query = ref;
-    //     query = query.orderBy('vendor');
-    //     return query;
-
-    //   }).valueChanges();
-
-    })
+      if (bazaar) {
+        this.bazaarId = bazaar.id;
+      }
+    });
 
     this.cartForm = new FormGroup({
       'vendor': new FormControl('', Validators.required), // bekommt Daten aus this.users$
@@ -98,7 +79,7 @@ export class CartComponent implements OnInit {
   }
 
   removeFromCart(item: any): void {
-    var index = this.cart.indexOf(item);
+    const index = this.cart.indexOf(item);
     this.cart.splice(index, 1);
 
     // todo
@@ -117,24 +98,26 @@ export class CartComponent implements OnInit {
 
 
   payment(): void {
-
+this.isLoading = true;
     this.cart.forEach((value) => {
       //  this.cartSrv.create(value);
       let itemDoc: AngularFirestoreDocument<any>;
       itemDoc = this.afs.doc<any>('bazaars/' + this.bazaarId);
 
       itemDoc.collection<any>('cartItems').add(value)
-        .then(function (docRef) {
+        .then((docRef) => {
+          this.isLoading = false;
           console.log("Document written with ID: ", docRef.id);
         })
         .catch(function (error) {
+          this.isLoading = false;
           console.error("Error adding document: ", error);
         });
     });
 
     console.log('time', firebase.firestore.FieldValue.serverTimestamp());
     this.store.select(fromApp.getUser).subscribe(user => {
-      
+
       const protocol = {
         user: user.displayName,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),

@@ -16,31 +16,38 @@ import * as BazaarActions from '../dashboard/store/bazaar.actions';
 export class HeaderComponent implements OnInit {
   isauth$: Observable<boolean>;
   selectedBazaar$: Observable<IBazaarId>;
+  adminUser: string;
+  isAdmin: boolean;
 
-
-  // cartItems$: Observable<ICartItem[]>;
-  // cartItemCollection: AngularFirestoreCollection<ICartItem>;
-  // turnover: number;
-
-  // private bazaarCollection: AngularFirestoreCollection<IBazaar>;
   bazaars$: Observable<IBazaarId[]>;
 
   constructor(private store: Store<fromApp.AppState>, private router: Router) { }
 
   ngOnInit() {
     this.isauth$ = this.store.select(fromApp.getIsAuthenticated);
+    this.store.select(fromApp.getUser).subscribe(user => {
+      if (user) {
+        this.adminUser = user.email;
 
+        this.store.dispatch(new BazaarActions.Query(user.email));
+
+      }
+    });
 
     this.bazaars$ = this.store.select(fromApp.getBazaars);
 
 
     this.selectedBazaar$ = this.store.select(fromApp.getSelectedBazaar);
+    this.selectedBazaar$.subscribe(bazaar => {
+      if (bazaar) {
+        this.isAdmin = (bazaar.admin === this.adminUser);
+      }
+    });
 
     // place getUser inside header, as this component is initially loaded
     // firebase login refresh makes this call helpfully here
     this.store.dispatch(new AuthActions.GetUser());
 
-    this.store.dispatch(new BazaarActions.Query());
 
   }
 

@@ -20,18 +20,23 @@ export function bazaarReducer(state = initiaState, action: BazaarActions.BazaarA
         //          bazaars: action.payload 
         //         };
         case BazaarActions.BazaarActionTypes.ADD_ALL:
-            // return pizzaAdapter.addAll(action.pizzas, state);
             return {
                 ...state,
-                bazaars: action.payload
+                bazaars: action.payload,
             };
-            case BazaarActions.BazaarActionTypes.SET_SELECTED_BAZAAR:
-            console.log('in bazaarReducer SET_SELECTED_BAZAAR - payload', action.payload);
+        case BazaarActions.BazaarActionTypes.SET_SELECTED_BAZAAR:
             return {
                 ...state,
                 selectedBazaar: action.payload
             };
-            case BazaarActions.BazaarActionTypes.RESET_SELECTED_BAZAAR:
+        case BazaarActions.BazaarActionTypes.FIND_AND_SELECT_BAZAAR:
+            // console.log('in bazaarReducer FIND_AND_SELECT_BAZAAR - payload', action.payload);
+            // console.log('selected', state.bazaars.find(bazaar => bazaar.id === action.payload));
+            return {
+                ...state,
+                selectedBazaar: state.bazaars.find(bazaar => bazaar.id === action.payload)
+            };
+        case BazaarActions.BazaarActionTypes.RESET_SELECTED_BAZAAR:
             return {
                 ...state,
                 selectedBazaar: null

@@ -29,7 +29,10 @@
         <div fxLayout="column" fxLayoutAlign="space-between center">
             <span>Summe:</span>
           <span>{{total | currency: '€'}}</span>
-          <button matButton mat-raised-button [disabled]="!total" (click)="payment()">bezahlen</button>
+          
+          <button matButton mat-raised-button [disabled]="!total" (click)="payment()">
+              <mat-spinner *ngIf="isLoading" diameter="39"></mat-spinner>
+            <span *ngIf="!isLoading">bezahlen</span></button>
         </div>
         <div *ngFor="let item of cart" fxLayout="column" fxLayoutAlign="space-around center" class="border-left border-warning text-center"
           style="min-width: 75px;">

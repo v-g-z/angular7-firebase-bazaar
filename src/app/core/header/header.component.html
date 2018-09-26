@@ -20,7 +20,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-      <a mat-button *ngIf="(selectedBazaar$ | async)" routerLink="/administration">Verwaltung (todo nur Admins!!!)</a>
+      <a mat-button [disabled]="!isAdmin" routerLink="/administration">Verwaltung</a>
       <a mat-button (click)="logout()">Logout</a>
     </ng-template>
 </mat-toolbar>
