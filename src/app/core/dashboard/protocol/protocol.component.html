@@ -5,24 +5,24 @@
       <mat-card-content  fxLayout="column" fxLayoutAlign="space-between start"  fxLayoutGap="5px"> -->
   <table class="p-table">
     <tr class="trow-head">
-        <th>#</th>
-        <th>Name</th>
-        <th>Zeitpunkt</th>
+      <th>Name</th>
+      <th>Zeitpunkt</th>
       <th>Summe<br>Einnahmen</th>
       <th>Einzelpositionen</th>
     </tr>
-    <tr class="trow-data" *ngFor="let protocol of protocol$ | async" style="font-size: 0.8em;" >
+    <tr class="trow-data" *ngFor="let protocol of protocol$ | async" style="font-size: 0.8em;">
       <td>{{protocol.user}}</td>
       <td>{{protocol?.createdAt?.toDate() | date:'dd.MM.yyyy HH:mm:ss'}}</td>
       <td style="text-align: right;">{{protocol.sum | currency : "€"}}</td>
-      <td  style="width:100%;  overflow:auto">
+      <td style="width:100%;  overflow:auto">
         <!-- <table><tr class="d-items"> -->
 
-        
-        <span class="d-items" *ngFor="let items of protocol.cartItems" >
-          <span style="float: left; border-right: 0.7px solid #ffd740;">Nr: {{items.vendor}}<br>{{items.price | currency : '€'}}</span>
+
+        <span class="d-items" *ngFor="let items of protocol.cartItems">
+          <span style="float: left; border-right: 0.7px solid #ffd740;">Nr: {{items.vendor}}<br>{{items.price |
+            currency : '€'}}</span>
         </span>
-      <!-- </tr></table> -->
+        <!-- </tr></table> -->
       </td>
     </tr>
   </table>

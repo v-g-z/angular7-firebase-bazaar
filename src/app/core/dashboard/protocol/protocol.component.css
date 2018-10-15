@@ -2,18 +2,26 @@ section {
     width: 100%;
 }
 
-.p-table {
-    width: 100%;
-    border: 0.6px solid #cfcfcf;
+table {
+    border-collapse: collapse;
 }
+
+table, th, td {
+    border: 1px solid #ffd740;
+}
+
+/* .p-table {
+    width: 100%;
+    border: 0.6px solid #ffd740;
+} */
 
 tr.trow-head > th {
     font-weight: 500;
-    color: black;
+    /* color: black; */
     background: #ffd740;
     padding: 10px 20px 10px 20px;
-    text-align: center;
-    height: 20px;
+    /* text-align: center;
+    height: 20px; */
     /* padding-top: 7px;
     font-weight: bold;
     color: white; */

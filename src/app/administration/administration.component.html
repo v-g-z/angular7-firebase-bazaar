@@ -15,8 +15,9 @@
           <mat-error>Bitte gib eine Zahl an</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input type="number" matInput placeholder="Auslagen *" formControlName="fee">
-            <mat-hint>Gib die Auslagen an, die du jedem Verkäufer berechnest</mat-hint>
+            <input type="number" matInput placeholder="Gebühr *" formControlName="fee">
+            <mat-hint>Gib die Auslagen an, die du jedem Verkäufer berechnest, z.B. für den Etikettendruck.
+            Du kannst auch 0 eingeben, dann berechnest du nix.</mat-hint>
             <mat-error>Bitte gib eine Zahl an</mat-error>
           </mat-form-field>
           <mat-form-field>
@@ -24,12 +25,11 @@
               <mat-hint>Gib die Höhe der Marge an, die die Einrichtung vom Umsatz je Verkäufer abzieht</mat-hint>
               <mat-error>Bitte gib eine Zahl an</mat-error>
             </mat-form-field>
-              <span fxFill fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="start start">
-                  <mat-spinner *ngIf="(isLoading$ | async)"></mat-spinner>
-          <button matButton *ngIf="!(isLoading$ | async)" type="submit" mat-raised-button [disabled]="bazaarForm.invalid">Speichern</button>
-        </span>
-      </form>
+            <span fxFill fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="start start">
+              <button matButton type="submit" mat-raised-button [disabled]="bazaarForm.invalid">Speichern</button>
+            </span>
+          </form>
+          <app-invite *ngIf="selectedBazaar$ | async"></app-invite>
     </mat-card-content>
   </mat-card>
 </section>
-<app-invite *ngIf="selectedBazaar$ | async"></app-invite>

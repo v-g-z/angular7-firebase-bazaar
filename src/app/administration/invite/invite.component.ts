@@ -47,6 +47,7 @@ export class InviteComponent implements OnInit {
 
 
   onSubmit() {
+    console.log('in invite submit');
     this.selectedBazaar$.subscribe(bazaar => {
       let itemDoc: AngularFirestoreDocument<any>;
       itemDoc = this.afs.doc<any>(`bazaars/${bazaar.id}`);
@@ -60,6 +61,23 @@ export class InviteComponent implements OnInit {
       });
     });
 
+  }
+
+  delete(item) {
+    console.log('in delete', item);
+
+    this.selectedBazaar$.subscribe(bazaar => {
+      let itemDoc: AngularFirestoreDocument<any>;
+      itemDoc = this.afs.doc<any>(`bazaars/${bazaar.id}`);
+      itemDoc.update({
+        access: firebase.firestore.FieldValue.arrayRemove(item)
+      }).then(() => {
+        this.initForm();
+        this.store.dispatch(new BazaarActions.FindAndSelectBazaar(bazaar.id));
+      }).catch(function (error) {
+        console.error('Ooops, da ist was schief gelaufen...', error);
+      });
+    });
   }
 
 

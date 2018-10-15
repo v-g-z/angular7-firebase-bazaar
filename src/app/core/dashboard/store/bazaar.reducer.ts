@@ -30,8 +30,8 @@ export function bazaarReducer(state = initiaState, action: BazaarActions.BazaarA
                 selectedBazaar: action.payload
             };
         case BazaarActions.BazaarActionTypes.FIND_AND_SELECT_BAZAAR:
-            // console.log('in bazaarReducer FIND_AND_SELECT_BAZAAR - payload', action.payload);
-            // console.log('selected', state.bazaars.find(bazaar => bazaar.id === action.payload));
+            console.log('in bazaarReducer FIND_AND_SELECT_BAZAAR - payload', action.payload);
+            console.log('selected', state.bazaars.find(bazaar => bazaar.id === action.payload));
             return {
                 ...state,
                 selectedBazaar: state.bazaars.find(bazaar => bazaar.id === action.payload)

@@ -1,0 +1,28 @@
+.highlight {
+    font-weight: bold;
+    height: 38px;
+}
+
+th {
+    font-weight: 500;
+    background: #ffd740;
+    padding: 10px 20px 10px 20px;
+}
+
+th:first-child, td:first-child {
+    width: 25px;
+    text-align: center;
+}
+
+th:last-child, td:last-child {
+    width: 20px;
+    text-align: right;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ffd740;
+}
