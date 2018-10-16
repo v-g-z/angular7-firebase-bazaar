@@ -27,13 +27,22 @@ export class CartComponent implements OnInit {
   paymentError: String = "";
 
 
-  cart: ICartItem[] = [];
-  //  = [
-  //   { vendor: 12, price: 10.20 },
-  //   { vendor: 32, price: 2 },
-  //   { vendor: 65, price: 7.25 },
-  //   { vendor: 4, price: 3.20 }
-  // ];
+  cart: ICartItem[]// = [];
+   = [
+    { vendor: 12, price: 10.20 },
+    { vendor: 32, price: 2 },
+    { vendor: 65, price: 7.25 },
+    { vendor: 12, price: 10.20 },
+    { vendor: 32, price: 2 },
+    { vendor: 65, price: 7.25 },
+    { vendor: 12, price: 10.20 },
+    { vendor: 32, price: 2 },
+    { vendor: 65, price: 7.25 },
+    { vendor: 12, price: 10.20 },
+    { vendor: 32, price: 2 },
+    { vendor: 65, price: 7.25 },
+    { vendor: 4, price: 3.20 }
+  ];
 
 
 
