@@ -3,3 +3,12 @@ mat-icon {
     cursor: pointer;
   }
 
+.prim-toolbar {
+  height: 27px;
+  font-size: 0.6em;
+  padding-left: 22px;
+  text-align: right;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+}

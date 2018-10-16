@@ -1,8 +1,4 @@
 <section fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="5px">
-  <!-- <mat-card fxFlex.xs="100%" >
-  
-      <mat-card-title>Protokoll</mat-card-title>
-      <mat-card-content  fxLayout="column" fxLayoutAlign="space-between start"  fxLayoutGap="5px"> -->
   <table class="p-table">
     <tr class="trow-head">
       <th>Name</th>
@@ -15,17 +11,11 @@
       <td>{{protocol?.createdAt?.toDate() | date:'dd.MM.yyyy HH:mm:ss'}}</td>
       <td style="text-align: right;">{{protocol.sum | currency : "€"}}</td>
       <td style="width:100%;  overflow:auto">
-        <!-- <table><tr class="d-items"> -->
-
-
         <span class="d-items" *ngFor="let items of protocol.cartItems">
           <span style="float: left; border-right: 0.7px solid #ffd740;">Nr: {{items.vendor}}<br>{{items.price |
             currency : '€'}}</span>
         </span>
-        <!-- </tr></table> -->
       </td>
     </tr>
   </table>
-  <!-- </mat-card-content>
-</mat-card> -->
 </section>

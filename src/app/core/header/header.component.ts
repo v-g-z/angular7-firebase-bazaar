@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { trigger, state, style, transition, keyframes, animate } from '@angular/animations';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -11,23 +12,67 @@ import * as BazaarActions from '../dashboard/store/bazaar.actions';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  animations: [
+    trigger('highlight', [
+      state('pulse', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      transition('void => *', [
+        animate(3000, keyframes([
+          style({
+            transform: 'translateX(300px)',
+            opacity: 0,
+            offset: 0
+          }),
+
+          style({
+            transform: 'translateX(150px)',
+            opacity: 0.5,
+            offset: 0.25
+          }),
+          style({
+            transform: 'translateX(0px)',
+            opacity: 1,
+            offset: 0.5
+          }),
+          style({ transform: 'scale(1)', offset: 0.6 }),
+      style({ transform: 'scale(3)', offset: 0.8 }),
+      style({ transform: 'scale(1)', offset: 1 })
+        ]))
+      ]),
+  ])
+  ]
+
+  
 })
 export class HeaderComponent implements OnInit {
+  state = 'normal';
   isauth$: Observable<boolean>;
   selectedBazaar$: Observable<IBazaarId>;
   adminUser: string;
+  userName: string;
   isAdmin: boolean;
 
   bazaars$: Observable<IBazaarId[]>;
 
-  constructor(private store: Store<fromApp.AppState>, private router: Router) { }
+  constructor(private route: ActivatedRoute, private store: Store<fromApp.AppState>, private router: Router) { }
 
   ngOnInit() {
+    this.route.params
+      .subscribe(
+        (params: Params) => {
+          this.state = 'pulse';        }
+      );
+
+
+
     this.isauth$ = this.store.select(fromApp.getIsAuthenticated);
     this.store.select(fromApp.getUser).subscribe(user => {
       if (user) {
         this.adminUser = user.email;
+        this.userName = user.displayName;
 
         this.store.dispatch(new BazaarActions.Query(user.email));
 
@@ -60,6 +105,10 @@ export class HeaderComponent implements OnInit {
       this.store.dispatch(new BazaarActions.ResetSelectedBazaar());
       this.router.navigateByUrl('/administration');
     }
+  }
+
+  routeToAdmin() {
+    this.router.navigateByUrl('/administration');
   }
 
   logout() {

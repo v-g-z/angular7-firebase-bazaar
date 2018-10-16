@@ -4,10 +4,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import * as fromApp from '../../../reducers/index';
 import { Observable } from 'rxjs';
-import { IBazaar, IBazaarId } from '../../models/bazaar.model';
-import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { IBazaarId } from '../../models/bazaar.model';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { map } from 'rxjs/operators';
 import { ICartItem, ICartItemId } from '../../models/cart-items.model';
 import * as moment from 'moment';
 

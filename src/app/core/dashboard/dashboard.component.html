@@ -1,6 +1,10 @@
 <app-summary></app-summary>
 <div class="gap">
-  <h2 fxLayoutAlign="center center" *ngIf="!(selectedBazaar$ | async)">Am Anfang war... der Basar!</h2>
+  <div fxLayout="column" fxLayoutAlign="center center" *ngIf="!(selectedBazaar$ | async)">
+    <h2>Am Anfang war... der Basar!</h2>
+    <p [@fadeOne]>Wähle oben aus der Liste der Basare, oder erstelle einen neuen Basar.</p>
+    <p>Ist dies dein erster Besuch hier, dann schau in die Hilfe</p>
+  </div>
   <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="20px" *ngIf="(selectedBazaar$ | async)">
     <app-cart></app-cart>
 

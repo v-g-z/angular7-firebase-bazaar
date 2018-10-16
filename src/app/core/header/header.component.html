@@ -1,4 +1,9 @@
 <mat-toolbar color="accent">
+    <mat-toolbar-row class="prim-toolbar">
+        <span *ngIf="(isauth$ | async)">Hallo {{ userName }}</span>
+      </mat-toolbar-row>
+
+  <mat-toolbar-row>
     <ng-template [ngIf]="!(isauth$ | async)">
       <span>Basar Abrechnungsprogramm</span>
       <span class="fx-fill-remaining"></span>
@@ -7,7 +12,7 @@
       <a mat-button routerLink="/login">Login</a>
     </ng-template>
     <ng-template [ngIf]="(isauth$ | async)">
-      <mat-icon *ngIf="(selectedBazaar$ | async)" matTooltip="Zum Dashboard: Eingabe der Daten" matTooltipPosition="right" (click)="routeToDashboard()">dashboard</mat-icon>&nbsp;
+              <mat-icon *ngIf="(selectedBazaar$ | async)" [@highlight] matTooltip="Zum Dashboard: Eingabe der Daten" matTooltipPosition="right" (click)="routeToDashboard()">dashboard</mat-icon>&nbsp;
       <span *ngIf="!(selectedBazaar$ | async)">Basar Abrechnungsprogramm</span>
 
       <span>{{ (selectedBazaar$ | async)?.title }}</span>
@@ -20,7 +25,9 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-      <a mat-button [disabled]="!isAdmin" routerLink="/administration">Verwaltung</a>
+      <!-- <a mat-button [disabled]="!isAdmin" routerLink="/administration">Verwaltung</a> -->
+      <button mat-button (click)="routeToAdmin()" [disabled]="!isAdmin">Verwaltung</button>
       <a mat-button (click)="logout()">Logout</a>
     </ng-template>
+  </mat-toolbar-row>
 </mat-toolbar>
