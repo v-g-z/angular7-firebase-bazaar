@@ -19,7 +19,7 @@ import { IBazaar } from '../models/bazaar.model';
         transform: 'translateX(0)'
       })),
       transition('void => *', [
-        animate(6000, keyframes([
+        animate(4000, keyframes([
           style({
             transform: 'translateX(-100px)',
             opacity: 0,

@@ -1,4 +1,4 @@
-<button matButton (click)="download()">download als csv Vorlage für den Serienbrief</button>
+<button matButton mat-raised-button (click)="download()">download als csv Vorlage für den Serienbrief</button>
 <div fxLayout="row" fxLayoutAlign="start start" class="container">
   <div *ngFor="let vendorItem of vendorItems; let i = index" class="outer-c">
     <div *ngIf="!vendorItem && i > 0" fxLayout="column" fxLayoutAlign="start center" >
@@ -7,9 +7,9 @@
     <div *ngIf="vendorItem" fxLayout="column" fxLayoutAlign="start center">
       <span  class="item-headline">Nr: {{vendorItem.vendor}}</span>
       <span class="bg-dark bold">Auszahlung</span>
-      <span class="bg-dark color">xxx</span>
+      <span class="bg-dark color">{{vendorItem.payoff | currency: "€"}}</span>
       <span class="bg-dark bold">KiTa Gebühr</span>
-      <span class="bg-dark">xxx</span>
+      <span class="bg-dark">{{vendorItem.fee | currency: "€"}}</span>
       <span class="bg-dark bold">Gesamt</span>
       <span class="bg-dark">{{vendorItem.sum | currency: "€"}}</span>
       <mat-divider></mat-divider>

@@ -1,21 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
-import { User } from '../models/user.model';
-
 import { AngularFireAuth } from '@angular/fire/auth';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import * as firebase from 'firebase';
-
 import { Observable, of, from } from 'rxjs';
 
-import { catchError, map, mapTo, switchMap, mergeMap } from 'rxjs/operators';
-
-
+import { User } from '../models/user.model';
 import * as AuthActions from './auth.actions';
-
 
 @Injectable()
 export class AuthEffects {
-
     @Effect()
     getUser: Observable<AuthActions.AuthActions> = this.actions$.ofType(AuthActions.AuthActionTypes.GET_USER)
         .pipe(
@@ -82,17 +76,17 @@ export class AuthEffects {
 
 
     // private registerEmailPassword(): firebase.Promise<any> {
-        private registerEmailPassword(payload) {
-            return this.afAuth.auth.createUserWithEmailAndPassword(payload.email, payload.password)
-        }
-    
+    private registerEmailPassword(payload) {
+        return this.afAuth.auth.createUserWithEmailAndPassword(payload.email, payload.password)
+    }
+
     // private googleLogin(): firebase.Promise<any> {
-        private googleLogin() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            return this.afAuth.auth.signInWithPopup(provider);
-        }
-    
-        
+    private googleLogin() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        return this.afAuth.auth.signInWithPopup(provider);
+    }
+
+
     constructor(private actions$: Actions, private afAuth: AngularFireAuth) { }
 
 }

@@ -28,25 +28,13 @@ export class LoginComponent implements OnInit {
 
   }
 
-
   googleLogin() {
     this.store.dispatch(new AuthActions.GoogleLogin());
   }
 
-  tryRegister(value){
+  tryRegister(value) {
 
     this.store.dispatch(new AuthActions.RegisterEmailPassword(value));
-
-    // this.authService.doRegister(value)
-    // .then(res => {
-    //   console.log(res);
-    //   // this.errorMessage = "";
-    //   // this.successMessage = "Your account has been created";
-    // }, err => {
-    //   console.log(err);
-    //   // this.errorMessage = err.message;
-    //   // this.successMessage = "";
-    // })
   }
 
 }

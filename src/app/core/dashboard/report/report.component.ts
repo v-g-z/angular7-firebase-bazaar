@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ICartItem } from '../../models/cart-items.model';
-import { IBazaarId } from '../../models/bazaar.model';
+import { AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 
+import { ICartItem } from '../../models/cart-items.model';
+import { IBazaarId } from '../../models/bazaar.model';
 import * as fromApp from '../../../reducers/index';
-import { AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-report',
@@ -24,13 +23,13 @@ export class ReportComponent implements OnInit {
     quoteStrings: '"',
     decimalseparator: '.',
     showLabels: true,
-    showTitle: true,
+    showTitle: false,
     useBom: true,
     // noDownload: true,
-    headers: ["Verkäufer", "Summe", "Einzelpositionen"]
+    headers: ['Verkäufer', 'Summe (€)', 'Einzelpositionen (€)', 'Auslagen (€)', 'Marge (%)', 'Auszahlung (€)']
   };
 
-  constructor(private store: Store<fromApp.AppState>, private afs: AngularFirestore, private router: Router) { }
+  constructor(private store: Store<fromApp.AppState>, private afs: AngularFirestore) { }
 
   ngOnInit() {
     this.selectedBazaar$ = this.store.select(fromApp.getSelectedBazaar);
@@ -49,7 +48,6 @@ export class ReportComponent implements OnInit {
         }).valueChanges();
 
         this.cartItems$.subscribe(cartItems => {
-          // let res2 = [];
           const res1 = [];
           for (const item of cartItems) {
             if (!res1[item.vendor]) {
@@ -58,12 +56,18 @@ export class ReportComponent implements OnInit {
                 sum: 0,
                 price: []
               };
-              // res2.push(res1[item.vendor])
             }
 
+            // add to pricelist
             res1[item.vendor].price.push(item.price);
+            // calc sum
             res1[item.vendor].sum += item.price;
-
+            // fee
+            res1[item.vendor].fee = bazaar.fee;
+            // margin
+            res1[item.vendor].margin = bazaar.margin;
+            // calc pay off
+            res1[item.vendor].payoff = res1[item.vendor].sum - (res1[item.vendor].sum * bazaar.margin / 100) - bazaar.fee;
 
           }
 
@@ -78,7 +82,9 @@ export class ReportComponent implements OnInit {
             }
           }
 
-          this.vendorItems = res1;
+          // console.log('res1', res1.filter(n => n));
+
+          this.vendorItems = res1.filter(n => n);
 
         });
 

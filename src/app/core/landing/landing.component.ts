@@ -1,9 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { AngularFirestore } from '@angular/fire/firestore';
-// import { AngularFireAuth } from '@angular/fire/auth';
-// import { auth } from 'firebase';
-
-// import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-landing',
@@ -17,11 +12,4 @@ export class LandingComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  // login() {
-  //   this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-  // }
-  // logout() {
-  //   this.afAuth.auth.signOut();
-  // }
 }

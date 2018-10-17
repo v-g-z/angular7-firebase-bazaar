@@ -24,25 +24,16 @@ export class CartComponent implements OnInit {
 
   total = 0;
 
-  paymentError: String = "";
+  paymentError = '';
 
 
-  cart: ICartItem[]// = [];
-   = [
-    { vendor: 12, price: 10.20 },
-    { vendor: 32, price: 2 },
-    { vendor: 65, price: 7.25 },
-    { vendor: 12, price: 10.20 },
-    { vendor: 32, price: 2 },
-    { vendor: 65, price: 7.25 },
-    { vendor: 12, price: 10.20 },
-    { vendor: 32, price: 2 },
-    { vendor: 65, price: 7.25 },
-    { vendor: 12, price: 10.20 },
-    { vendor: 32, price: 2 },
-    { vendor: 65, price: 7.25 },
-    { vendor: 4, price: 3.20 }
-  ];
+  cart: ICartItem[] = [];
+  //  = [
+  //   { vendor: 12, price: 10.20 },
+  //   { vendor: 32, price: 2 },
+  //   { vendor: 65, price: 7.25 },
+  //   { vendor: 4, price: 3.20 }
+  // ];
 
 
 
@@ -64,18 +55,13 @@ export class CartComponent implements OnInit {
 
   }
 
-  /**
- * push a single item to cart
- *
- * @param vendor
- * @param price
- */
+  /*
+   * push a single item to cart
+   */
   addToCart(): void {
-    let now = moment();
-
     // single item from form
     const item = {
-      vendor: parseInt(this.cartForm.value.vendor),
+      vendor: parseFloat(this.cartForm.value.vendor),
       price: parseFloat(this.cartForm.value.price)
     };
 
@@ -106,7 +92,7 @@ export class CartComponent implements OnInit {
 
 
   payment(): void {
-this.isLoading = true;
+    this.isLoading = true;
     this.cart.forEach((value) => {
       //  this.cartSrv.create(value);
       let itemDoc: AngularFirestoreDocument<any>;
@@ -115,15 +101,13 @@ this.isLoading = true;
       itemDoc.collection<any>('cartItems').add(value)
         .then((docRef) => {
           this.isLoading = false;
-          console.log("Document written with ID: ", docRef.id);
         })
         .catch(function (error) {
           this.isLoading = false;
-          console.error("Error adding document: ", error);
         });
     });
 
-    console.log('time', firebase.firestore.FieldValue.serverTimestamp());
+    // console.log('time', firebase.firestore.FieldValue.serverTimestamp());
     this.store.select(fromApp.getUser).subscribe(user => {
 
       const protocol = {
