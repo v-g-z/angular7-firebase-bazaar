@@ -7,8 +7,7 @@ import { Observable } from 'rxjs';
 import { IBazaarId } from '../../models/bazaar.model';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { ICartItem, ICartItemId } from '../../models/cart-items.model';
-import * as moment from 'moment';
+import { ICartItem } from '../../models/cart-items.model';
 
 @Component({
   selector: 'app-cart',
@@ -45,13 +44,13 @@ export class CartComponent implements OnInit {
     this.selectedBazaar$.subscribe(bazaar => {
       if (bazaar) {
         this.bazaarId = bazaar.id;
+        this.cartForm = new FormGroup({
+          'vendor': new FormControl('', [Validators.required, Validators.min(1), Validators.max(bazaar.nbOfVendors)]), 
+          'price': new FormControl('', Validators.required),
+        });
       }
     });
 
-    this.cartForm = new FormGroup({
-      'vendor': new FormControl('', Validators.required), // bekommt Daten aus this.users$
-      'price': new FormControl('', Validators.required),
-    });
 
   }
 

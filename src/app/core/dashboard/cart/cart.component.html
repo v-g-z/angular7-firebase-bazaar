@@ -7,8 +7,13 @@
         (ngSubmit)="addToCart()">
         <mat-form-field>
           <span matPrefix>Nr: &nbsp;</span>
-          <input type="number" matInput placeholder="" formControlName="vendor" min="1" max="80" required>
+          <input type="number" matInput placeholder="" formControlName="vendor" min="1" max="(selectedBazaar$ | async).nbOfVendors" required>
           <mat-hint>Verkäufernummer: 1 - {{ (selectedBazaar$ | async).nbOfVendors }}</mat-hint>
+          <!-- <mat-error [hidden]="cartForm.controls.vendor.valid">
+              street required
+          </mat-error> -->
+          <mat-error *ngIf="cartForm?.controls.vendor?.errors?.min">Bitte min. Verkäufernummer (1) beachten</mat-error>
+          <mat-error *ngIf="cartForm?.controls.vendor?.errors?.max">Bitte max. Verkäufernummer ({{ (selectedBazaar$ | async).nbOfVendors }}) beachten</mat-error>
         </mat-form-field>
         <mat-form-field>
           <span matPrefix>Preis: &nbsp;</span>
