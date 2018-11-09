@@ -16,10 +16,12 @@ import { CartComponent } from './dashboard/cart/cart.component';
 import { ProtocolComponent } from './dashboard/protocol/protocol.component';
 import { ReportComponent } from './dashboard/report/report.component';
 import { SummaryComponent } from './dashboard/summary/summary.component';
+import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
+    SidenavListComponent,
     LandingComponent,
     LoginComponent,
     DashboardComponent,
@@ -36,7 +38,8 @@ import { SummaryComponent } from './dashboard/summary/summary.component';
   ],
   exports: [
     AppRoutingModule,
-    HeaderComponent
+    HeaderComponent,
+    SidenavListComponent
   ]
 })
 export class CoreModule {}

@@ -5,13 +5,14 @@ import { LoginComponent } from './auth/login/login.component';
 import { DashboardComponent } from './core/dashboard/dashboard.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { ReportComponent } from './core/dashboard/report/report.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const appRoutes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'report', component: ReportComponent },
-  { path: 'administration', component: AdministrationComponent },
+  { path: 'dashboard', component: DashboardComponent  },
+  { path: 'report', component: ReportComponent  },
+  { path: 'administration', component: AdministrationComponent  },
 ];
 
 @NgModule({

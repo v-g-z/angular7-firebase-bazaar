@@ -1,33 +1,46 @@
 <mat-toolbar color="accent">
-    <mat-toolbar-row class="prim-toolbar">
-        <span *ngIf="(isauth$ | async)">Hallo {{ userName }}</span>
-      </mat-toolbar-row>
+  <mat-toolbar-row class="prim-toolbar">
+    <span *ngIf="(isAuth$ | async)">Hallo {{ userName }}</span>
+    <span class="fx-fill-remaining"></span>
+    <a mat-button style="font-size: 0.7em;" href="https://v-g-z.de" target="_blank">&copy; v-g-z.de</a>
+  </mat-toolbar-row>
 
   <mat-toolbar-row>
-    <ng-template [ngIf]="!(isauth$ | async)">
+    <div fxHide.gt-xs>
+      <button mat-icon-button (click)="onToggleSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+
+    <ng-template [ngIf]="!(isAuth$ | async)">
       <span>Basar Abrechnungsprogramm</span>
       <span class="fx-fill-remaining"></span>
 
       <!-- <li><a routerLink="/signup">Register</a></li> -->
       <a mat-button routerLink="/login">Login</a>
     </ng-template>
-    <ng-template [ngIf]="(isauth$ | async)">
-              <mat-icon *ngIf="(selectedBazaar$ | async)" [@highlight] matTooltip="Zum Dashboard: Eingabe der Daten" matTooltipPosition="right" (click)="routeToDashboard()">dashboard</mat-icon>&nbsp;
-      <span *ngIf="!(selectedBazaar$ | async)">Basar Abrechnungsprogramm</span>
+    <ng-template [ngIf]="(isAuth$ | async)">
+      <div fxFlex fxLayout fxLayoutAlign="flex-end" >
+        <span style="margin-top: 12px">
+        <mat-icon *ngIf="(selectedBazaar$ | async)" [@highlight] matTooltip="Zum Dashboard: Eingabe der Daten"
+          matTooltipPosition="right" (click)="routeToDashboard()" fxHide.xs>dashboard</mat-icon>&nbsp;
+        <span *ngIf="!(selectedBazaar$ | async)" fxHide.xs>Basar Abrechnungsprogramm</span>
 
-      <span>{{ (selectedBazaar$ | async)?.title }}</span>
-      <span class="fx-fill-remaining"></span>
-      <mat-form-field style="font-size: 0.7em; top: 5px;">
+        <span>{{ (selectedBazaar$ | async)?.title }}</span>
+      </span>
+        <span class="fx-fill-remaining"></span>
+        <mat-form-field style="font-size: 0.7em; top: 5px;" fxHide.xs>
           <mat-select placeholder="Basare" (selectionChange)="select($event)">
-              <mat-option>Neu anlegen</mat-option>
-            <mat-option *ngFor="let bazaar of bazaars$ | async" [value]="bazaar" >
+            <mat-option>Neu anlegen</mat-option>
+            <mat-option *ngFor="let bazaar of bazaars$ | async" [value]="bazaar">
               {{bazaar.title}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-      <!-- <a mat-button [disabled]="!isAdmin" routerLink="/administration">Verwaltung</a> -->
-      <button mat-button (click)="routeToAdmin()" [disabled]="!isAdmin">Verwaltung</button>
-      <a mat-button (click)="logout()">Logout</a>
+        <!-- <a mat-button [disabled]="!isAdmin" routerLink="/administration">Verwaltung</a> -->
+        <button mat-button (click)="routeToAdmin()" [disabled]="!isAdmin" fxHide.xs>Verwaltung</button>
+        <button mat-button (click)="onLogout()" fxHide.xs>Logout</button>
+      </div>
     </ng-template>
   </mat-toolbar-row>
 </mat-toolbar>

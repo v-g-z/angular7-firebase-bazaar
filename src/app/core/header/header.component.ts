@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { trigger, state, style, transition, keyframes, animate } from '@angular/animations';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -48,8 +48,10 @@ import * as BazaarActions from '../dashboard/store/bazaar.actions';
   
 })
 export class HeaderComponent implements OnInit {
+  @Output() sidenavToggle = new EventEmitter<void>();
+
   state = 'normal';
-  isauth$: Observable<boolean>;
+  isAuth$: Observable<boolean>;
   selectedBazaar$: Observable<IBazaarId>;
   adminUser: string;
   userName: string;
@@ -68,7 +70,7 @@ export class HeaderComponent implements OnInit {
 
 
 
-    this.isauth$ = this.store.select(fromApp.getIsAuthenticated);
+    this.isAuth$ = this.store.select(fromApp.getIsAuthenticated);
     this.store.select(fromApp.getUser).subscribe(user => {
       if (user) {
         this.adminUser = user.email;
@@ -80,7 +82,6 @@ export class HeaderComponent implements OnInit {
     });
 
     this.bazaars$ = this.store.select(fromApp.getBazaars);
-
 
     this.selectedBazaar$ = this.store.select(fromApp.getSelectedBazaar);
     this.selectedBazaar$.subscribe(bazaar => {
@@ -111,7 +112,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/administration');
   }
 
-  logout() {
+  onLogout() {
     this.store.dispatch(new AuthActions.Logout());
     this.router.navigateByUrl('');
   }
@@ -119,4 +120,9 @@ export class HeaderComponent implements OnInit {
   routeToDashboard() {
     this.router.navigateByUrl('/dashboard');
   }
+
+  onToggleSidenav() {
+    this.sidenavToggle.emit();
+  }
+
 }
