@@ -9,3 +9,5 @@ digitizing the billing process during bazaars in kindergardens and schools
 
 For deploying to firebase --> visit google's firebase <a href="https://firebase.google.com/docs/hosting/deploying">documentation</a>
 
+# demo
+try out the <a href="https://bazaar-13.firebaseapp.com" target="_blank">demo</a>
