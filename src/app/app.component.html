@@ -1,0 +1,13 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation" mode="push">
+        <app-sidenav-list (closeSidenav)="sidenav.close()"></app-sidenav-list>
+    </mat-sidenav>
+    <mat-sidenav-content style="height: 100vH;">
+        <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+        <main>
+            <div fxFill fxLayout="column start">
+                <router-outlet></router-outlet>
+            </div>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>

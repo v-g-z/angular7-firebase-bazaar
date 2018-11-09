@@ -1,0 +1,34 @@
+<div class="gap" >
+
+  <mat-card>
+    <mat-card-title>CSV Download</mat-card-title>
+    <mat-card-subtitle>Die CSV Datei dient als Vorlage für den Serienbrief</mat-card-subtitle>
+    <mat-card-content fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="35px">
+      <button matButton mat-raised-button (click)="download()">download</button>
+    </mat-card-content>
+  </mat-card>
+  <div fxLayout="row" fxLayoutAlign="start start" class="container">
+    <div *ngFor="let vendorItem of vendorItems; let i = index" class="outer-c">
+      <div *ngIf="!vendorItem && i > 0" fxLayout="column" fxLayoutAlign="start center">
+        <span class="item-headline">weg: {{i}}</span>
+      </div>
+      <div *ngIf="vendorItem" fxLayout="column" fxLayoutAlign="start center">
+        <span class="item-headline">Nr: {{vendorItem.vendor}}</span>
+        <span class="bg-dark bold">Auszahlung</span>
+        <span class="bg-dark color">{{vendorItem.payoff | currency: "€"}}</span>
+        <span class="bg-dark bold">KiTa Gebühr</span>
+        <span class="bg-dark">{{vendorItem.fee | currency: "€"}}</span>
+        <span class="bg-dark bold">Gesamt</span>
+        <span class="bg-dark">{{vendorItem.sum | currency: "€"}}</span>
+        <mat-divider></mat-divider>
+        <span class="item-headline top">Artikel</span>
+        <span *ngFor="let price of vendorItem.price" fxLayout="column" fxLayoutAlign="start center">
+          <span class="top">{{price | currency: "€"}}</span>
+          <mat-divider></mat-divider>
+
+        </span>
+
+      </div>
+    </div>
+  </div>
+</div>

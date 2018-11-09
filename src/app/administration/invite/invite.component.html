@@ -1,0 +1,42 @@
+<section fxFill fxLayout fxLayoutAlign="center" fxLayoutGap="20px" style="height:100vh;">
+  <mat-card fxFlex.xs="100%" class="gap">
+    <mat-card-title>Lade deine Freunde zu deinem Basar ein</mat-card-title>
+    <mat-card-subtitle *ngIf="access.length === 1">Bislang hast nur du Zugang zu diesem Basar. Lade hier weitere
+      Personen ein, die z.B. die Kasse mit übernehmen.</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="access.length > 1">Prima. Du kannst jetzt mit mehreren Personen den Basar
+      'abkassieren'.
+      <small>Bitte beachte, dass du nur Personen einladen kannst, die ein gültiges google Konto besitzen. (gmail oder
+        googlemail Adresse). Du findest diesen Quellcode aber bei github und kannst diesen gerne für deine Zwecke
+        nutzen und anpassen.
+      </small></mat-card-subtitle>
+    <mat-card-content>
+      <table>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let item of access; let i = index" [ngClass]="{'highlight' : i === 0}">
+          <td>{{ i + 1 }}</td>
+          <td style="padding-left: 10px; padding-right: 10px;">{{ item }} </td>
+          <td>
+            <span *ngIf="(i > 0)"><button matButton mat-raised-button (click)="delete(item)">entfernen</button></span>
+          </td>
+        </tr>
+      </table>
+      <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="25px" [formGroup]="inviteForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <input type="email" matInput placeholder="Email * (gmail oder googlemail)" formControlName="email" maxlength="150">
+          <mat-hint>
+            Du kannst jede Emailadresse nur einmal eingeben.
+          </mat-hint>
+          <mat-error>Fehlende oder falsche Emailadresse</mat-error>
+        </mat-form-field>
+        <span fxFill fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="start start">
+          <button matButton type="submit" mat-raised-button [disabled]="inviteForm.invalid">Einladen</button>
+        </span>
+      </form>
+
+    </mat-card-content>
+  </mat-card>
+</section>

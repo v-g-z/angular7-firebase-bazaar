@@ -1,0 +1,17 @@
+<div class="summary" *ngIf="(selectedBazaar$ | async)">
+  <span>
+    Anzahl Verkäufer: {{ (selectedBazaar$ | async).nbOfVendors }} | Gebühr: {{ (selectedBazaar$ | async).fee |
+    currency: "€"
+    }} | Marge: {{ (selectedBazaar$ | async).margin }} %
+  </span>
+  <span class="fx-fill-remaining"></span>
+
+  <span *ngIf="(cartItems$ | async )?.length > 0">
+    Umsatz: {{ turnover | currency: "€" }} |
+    Gewinn: {{ (turnover * (selectedBazaar$ | async).margin / 100) | currency: "€" }} |
+  </span>
+
+  <span *ngIf="(cartItems$ | async )?.length === 0" style="color: red;">
+Gib Daten ein und du siehst hier den Umsatz und Gewinn  </span>
+
+</div>

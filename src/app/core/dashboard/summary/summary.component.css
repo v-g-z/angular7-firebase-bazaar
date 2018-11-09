@@ -1,0 +1,14 @@
+.summary {
+    display: flex;
+    height: 15px;
+    font-size: 0.65em;
+    background: #ffd740;
+    padding: 0px 20px;
+  }
+
+  mat-icon {
+    font-size: 1.6em;
+    top: -4px;
+    position: relative;
+    cursor: pointer;
+  }

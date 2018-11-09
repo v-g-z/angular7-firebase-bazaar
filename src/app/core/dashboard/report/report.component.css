@@ -1,0 +1,45 @@
+.container {
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    /* min-height: 88vh; */
+}
+
+.outer-c {
+    font-size: 0.7em; 
+    border: 1px solid #ffd740; 
+    padding: 3px; 
+    min-width: 70px;
+    margin: 1px;
+}
+
+.item-headline {
+    background-color: #ffd740;
+    width: 100%;
+    text-align: center;
+    height: 20px;
+    padding-top: 7px;
+    font-weight: bold;
+    color: white;
+}
+
+.bg-dark {
+    background-color: #dfdfdf;
+    width: 100%;
+    text-align: center;
+    margin-top: 7px;
+    padding: 5px 0px;
+}
+
+.bold {
+    fonnt-weight: bold;
+}
+
+.color {
+    background-color: #ffd740;
+}
+
+.top {
+    margin-top: 4px;
+}

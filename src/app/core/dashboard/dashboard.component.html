@@ -1,0 +1,27 @@
+<app-summary></app-summary>
+<div class="gap">
+  <div fxLayout="column" fxLayoutAlign="center center" *ngIf="!(selectedBazaar$ | async)">
+    <h2>Am Anfang war... der Basar!</h2>
+    <p [@fadeOne]>Wähle oben aus der Liste der Basare, oder erstelle einen neuen Basar.</p>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="20px" *ngIf="(selectedBazaar$ | async)">
+    <app-cart></app-cart>
+
+    <mat-tab-group>
+      <mat-tab>
+          <ng-template mat-tab-label >
+              <span class="mat-tab-label">Protokoll</span>
+            </ng-template>
+        <app-protocol></app-protocol>
+      </mat-tab>
+
+      <mat-tab>
+          <ng-template mat-tab-label >
+              <span class="mat-tab-label">Übersicht</span>
+            </ng-template>
+        <app-report></app-report>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+</div>
