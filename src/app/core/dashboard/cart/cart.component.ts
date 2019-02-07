@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -14,7 +14,7 @@ import { ICartItem } from '../../models/cart-items.model';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, AfterViewInit {
   @ViewChild("vendor") vendorField: ElementRef;
   
   cartForm: FormGroup;
@@ -58,6 +58,11 @@ export class CartComponent implements OnInit {
 
   }
 
+  ngAfterViewInit() {
+    this.vendorField.nativeElement.focus();
+  }
+
+
 
   simulate() {
     let cItems = Math.floor(Math.random()*80) + 1;
@@ -83,6 +88,21 @@ export class CartComponent implements OnInit {
     setTimeout(() => this.simulate(), 5000);
   }
 
+  _keyDown(event: any) {
+    const pattern = /[0-9\,\ ]/;
+console.log('code', event);
+    if(event.keyCode === 8 || event.keyCode === 13) {
+      console.log('backsapce');
+      return;
+    }
+
+
+    if (!pattern.test(event.key) ) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+}
+
   /*
    * push a single item to cart
    */
@@ -90,7 +110,7 @@ export class CartComponent implements OnInit {
     // single item from form
     const item = {
       vendor: parseFloat(this.cartForm.value.vendor),
-      price: parseFloat(this.cartForm.value.price)
+      price: parseFloat(this.cartForm.value.price.replace(',', '.'))
     };
 
     // push this item to cart
