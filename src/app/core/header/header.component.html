@@ -1,9 +1,10 @@
 <mat-toolbar color="accent">
   <mat-toolbar-row class="prim-toolbar">
-    <span *ngIf="!(isAuth$ | async)" style="font-size: 0.7em; margin-right: 10px;">V 1.0.0</span>
     <span *ngIf="(isAuth$ | async)">Hallo {{ userName }}</span>
     <span class="fx-fill-remaining"></span>
     <a mat-button style="font-size: 0.7em;" href="https://v-g-z.de" target="_blank">&copy; v-g-z.de</a>
+    <span style="font-size: 0.7em; margin-right: 10px;">V 1.0.1</span>
+
   </mat-toolbar-row>
 
   <mat-toolbar-row>
