@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   authState$: Observable<State>;
   constructor(private store: Store<fromApp.AppState>, private router: Router) { }
   registerForm: FormGroup;
+  disabledAgreement: boolean = true;
 
   ngOnInit() {
     this.authState$ = this.store.select('auth');
@@ -26,6 +27,10 @@ export class LoginComponent implements OnInit {
       }
     });
 
+  }
+
+  changeCheck(event){
+    this.disabledAgreement = !event.checked;
   }
 
   googleLogin() {

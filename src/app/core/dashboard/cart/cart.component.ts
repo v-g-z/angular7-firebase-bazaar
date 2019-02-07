@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -15,6 +15,8 @@ import { ICartItem } from '../../models/cart-items.model';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+  @ViewChild("vendor") vendorField: ElementRef;
+  
   cartForm: FormGroup;
   bazaarId: String;
   selectedBazaar$: Observable<IBazaarId>;
@@ -48,10 +50,37 @@ export class CartComponent implements OnInit {
           'vendor': new FormControl('', [Validators.required, Validators.min(1), Validators.max(bazaar.nbOfVendors)]), 
           'price': new FormControl('', Validators.required),
         });
+
+
       }
     });
+    // setTimeout(() => this.simulate(), 5000);
+
+  }
 
 
+  simulate() {
+    let cItems = Math.floor(Math.random()*80) + 1;
+
+    for (let index = 0; index < cItems; index++) {
+      // setInterval(() => console.log('werte: ', Math.floor(Math.random() * ((10-5)+1) + 5)), 2000);
+      const item = {
+        vendor: Math.floor(Math.random()*80) + 1,
+        price: Math.floor(Math.random()*100) / 10
+      };
+  
+      // push this item to cart
+      this.cart.push(item);
+      this.calculateSum();
+      console.log('in for: ', index);
+      // setInterval(() => console.log('verkäufer: ', Math.floor(Math.random()*80) + 1), 2000);
+      // setInterval(() => console.log('preise: ', Math.floor(Math.random()*100) / 10), 1000);
+      
+      
+    }
+
+    this.payment();
+    setTimeout(() => this.simulate(), 5000);
   }
 
   /*
@@ -69,6 +98,8 @@ export class CartComponent implements OnInit {
     this.cartForm.reset();
 
     this.calculateSum();
+
+    this.vendorField.nativeElement.focus();
   }
 
   removeFromCart(item: any): void {
@@ -80,6 +111,8 @@ export class CartComponent implements OnInit {
 
     this.calculateSum();
 
+    this.vendorField.nativeElement.focus();
+
   }
 
   calculateSum(): void {
@@ -87,6 +120,9 @@ export class CartComponent implements OnInit {
     if (this.cart.length > 0) {
       this.total = this.cart.filter(c => this.cart).map(c => c.price).reduce((sum, current) => sum + current);
     }
+    console.log('Kalkuliere...');
+
+    this.vendorField.nativeElement.focus();
   }
 
 
@@ -124,7 +160,12 @@ export class CartComponent implements OnInit {
       this.cart = [];
 
       this.total = 0;
+      console.log('Bezahle...');
     });
+
+    this.vendorField.nativeElement.focus();
+
+
   }
 
 

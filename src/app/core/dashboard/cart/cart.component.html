@@ -1,13 +1,12 @@
 <section>
   <mat-card fxFlex.xs="100%">
-
     <mat-card-title>Eingaben</mat-card-title>
     <mat-card-content fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="35px">
       <form fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start end" fxLayoutGap="25px" [formGroup]="cartForm"
         (ngSubmit)="addToCart()">
         <mat-form-field>
           <span matPrefix>Nr: &nbsp;</span>
-          <input type="number" matInput placeholder="" formControlName="vendor" min="1" max="(selectedBazaar$ | async).nbOfVendors" required>
+          <input type="number" matInput placeholder="" formControlName="vendor" #vendor min="1" max="(selectedBazaar$ | async).nbOfVendors" required autocomplete="disabled">
           <mat-hint>Verkäufernummer: 1 - {{ (selectedBazaar$ | async).nbOfVendors }}</mat-hint>
           <!-- <mat-error [hidden]="cartForm.controls.vendor.valid">
               street required
@@ -17,7 +16,7 @@
         </mat-form-field>
         <mat-form-field>
           <span matPrefix>Preis: &nbsp;</span>
-          <input type="number" matInput placeholder="" formControlName="price" required>
+          <input type="number" matInput placeholder="" formControlName="price" #price required autocomplete="disabled">
           <!-- <mat-icon matSuffix>library_add</mat-icon> -->
           <span matSuffix>€</span>
           <mat-hint>Artikelpreis</mat-hint>

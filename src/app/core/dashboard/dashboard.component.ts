@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 
 
 import { Store } from '@ngrx/store';
@@ -52,10 +53,18 @@ import { IBazaar } from '../models/bazaar.model';
 })
 export class DashboardComponent implements OnInit {
   selectedBazaar$: Observable<IBazaar>;
+  isAuth$: Observable<boolean>;
 
-  constructor(private store: Store<fromApp.AppState>) { }
+  constructor(private store: Store<fromApp.AppState>, private router: Router) { }
 
   ngOnInit() {
+    this.isAuth$ = this.store.select(fromApp.getIsAuthenticated);
+    this.isAuth$.subscribe(auth => {
+      if (!auth) {
+        this.router.navigateByUrl('/login');
+      }
+    })
+
     this.selectedBazaar$ = this.store.select(fromApp.getSelectedBazaar);
   }
 

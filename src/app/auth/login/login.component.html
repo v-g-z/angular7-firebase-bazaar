@@ -1,7 +1,13 @@
-<section fxFill fxLayout fxLayoutAlign="center" style="height:100vh;">
+<section class="gap" fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="20px">
   <mat-card fxFlex.xs="100%">
     <mat-card-title>Anmeldung</mat-card-title>
-    <mat-card-content>
+    <mat-card-content fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="35px">
+      Du kannst dich mit einem gültigen google account (gmail oder googlemail) anmelden. Wenn du noch
+          keinen hast, kannst du dich registrieren. Nutze dazu ebenfalls den Button 'Mit Google anmelden'
+        <br />Du hast die Möglichkeit mehrere Basare anzulegen und ausreichend zu testen, bevor du das Programm an einem echten Basar ausprobierst. 
+          Achte darauf, dass du eine Internetverbindung hast. Sollte während eines Basares ein PC ausfallen, so kannst du von jedem anderen PC neu anmelden und fortfahren. 
+          Die eingegebenen Daten gehen nicht verloren.
+        <p>Nein, ich möchte doch lieber <a mat-stroked-button routerLink="/">zurück zur Startseite</a></p>
         <!-- <form [formGroup]="registerForm">
             <div class="form-group">
               <label>Email address</label>
@@ -14,8 +20,11 @@
             <button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-default">Register</button>
          </form>
  -->
-      <button  matButton mat-raised-button (click)="googleLogin()" >Sign In with Google</button>
-</mat-card-content>
-</mat-card>
+ <h4>Nutzungsbedingungen</h4>
+ Ich bestätige, dass ich das Programm auf eigene Verantwortung nutze und den Anbieter nicht für Fehler, Fehlfunktionen, Fehlbedienungen, etc. verantwortlich mache.
+   Ich bestätige, dass ich die Funktionen der Software ausreichend getestet habe. Wenn ich Leiter eines Basares bin, versichere ich, dass ich alle beteiligten Personen meines Basares eingewiesen habe.
+   <mat-checkbox (change)="changeCheck($event)">Ich stimme zu</mat-checkbox>     
+ <button matButton mat-raised-button [disabled]="disabledAgreement" (click)="googleLogin()">Mit Google anmelden</button>
+    </mat-card-content>
+  </mat-card>
 </section>
-
