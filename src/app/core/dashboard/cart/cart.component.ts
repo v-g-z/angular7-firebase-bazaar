@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -16,7 +16,7 @@ import { ICartItem } from '../../models/cart-items.model';
 })
 export class CartComponent implements OnInit, AfterViewInit {
   @ViewChild("vendor") vendorField: ElementRef;
-  
+
   cartForm: FormGroup;
   bazaarId: String;
   selectedBazaar$: Observable<IBazaarId>;
@@ -47,7 +47,7 @@ export class CartComponent implements OnInit, AfterViewInit {
       if (bazaar) {
         this.bazaarId = bazaar.id;
         this.cartForm = new FormGroup({
-          'vendor': new FormControl('', [Validators.required, Validators.min(1), Validators.max(bazaar.nbOfVendors)]), 
+          'vendor': new FormControl('', [Validators.required, Validators.min(1), Validators.max(bazaar.nbOfVendors)]),
           'price': new FormControl('', Validators.required),
         });
 
@@ -65,23 +65,23 @@ export class CartComponent implements OnInit, AfterViewInit {
 
 
   simulate() {
-    let cItems = Math.floor(Math.random()*80) + 1;
+    let cItems = Math.floor(Math.random() * 80) + 1;
 
     for (let index = 0; index < cItems; index++) {
       // setInterval(() => console.log('werte: ', Math.floor(Math.random() * ((10-5)+1) + 5)), 2000);
       const item = {
-        vendor: Math.floor(Math.random()*80) + 1,
-        price: Math.floor(Math.random()*100) / 10
+        vendor: Math.floor(Math.random() * 80) + 1,
+        price: Math.floor(Math.random() * 100) / 10
       };
-  
+
       // push this item to cart
       this.cart.push(item);
       this.calculateSum();
       console.log('in for: ', index);
       // setInterval(() => console.log('verkäufer: ', Math.floor(Math.random()*80) + 1), 2000);
       // setInterval(() => console.log('preise: ', Math.floor(Math.random()*100) / 10), 1000);
-      
-      
+
+
     }
 
     this.payment();
@@ -90,18 +90,21 @@ export class CartComponent implements OnInit, AfterViewInit {
 
   _keyDown(event: any) {
     const pattern = /[0-9\,\ ]/;
-console.log('code', event);
-    if(event.keyCode === 8 || event.keyCode === 13) {
-      console.log('backsapce');
+    console.log('code', event);
+    if (event.keyCode === 8 || event.keyCode === 13) {
       return;
     }
 
+    // Tab
+    if (event.keyCode === 9) {
+      this.vendorField.nativeElement.focus();
+    }
 
-    if (!pattern.test(event.key) ) {
+    if (!pattern.test(event.key)) {
       // invalid character, prevent input
       event.preventDefault();
     }
-}
+  }
 
   /*
    * push a single item to cart

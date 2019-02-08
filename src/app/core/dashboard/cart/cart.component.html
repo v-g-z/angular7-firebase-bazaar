@@ -37,11 +37,13 @@
           </button>
         </div>
         <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start" fxLayoutGap="25px" style="width: 80%;  overflow-x: auto;">
-          <div *ngFor="let item of cart" fxLayout="column" fxLayoutAlign="space-around center" class="cart text-center"
+          <div *ngFor="let _ of cart; let i = index" fxLayout="column" fxLayoutAlign="space-around center" class="cart text-center"
             style=" margin-bottom: 5px !important; min-width: 75px;">
+            <ng-container *ngIf="cart[cart.length-i-1] as item">
             <span>{{item.vendor}}</span>
             <span>{{item.price | currency : '€'}}</span>
             <button matButton mat-raised-button color="warn" (click)="removeFromCart(item)">X</button>
+          </ng-container>
           </div>
         </div>
         {{paymentError}}

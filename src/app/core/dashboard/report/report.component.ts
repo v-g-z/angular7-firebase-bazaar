@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
 import { AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -26,10 +27,20 @@ export class ReportComponent implements OnInit {
     showTitle: false,
     useBom: true,
     // noDownload: true,
-    headers: ['Verkäufer', 'Summe (€)', 'Einzelpositionen (€)', 'Auslagen (€)', 'Marge (%)', 'Auszahlung (€)']
+    // headers: ['Verkäufer', 'Summe (€)', 'Einzelpositionen (€)', 'Auslagen (€)', 'Marge (%)', 'Auszahlung (€)']
+    headers: [
+      'Verkäufer',
+      'Auszahlungsbetrag (€)',
+      'Etikettengebühr',
+      'Verkäufernummer',
+      'Kasse - Auszahlung',
+      'Kasse - Marge (%)',
+      'Kasse - Summe (€)',
+      'Kasse - Einzelpositionen (€)'
+    ]
   };
 
-  constructor(private store: Store<fromApp.AppState>, private afs: AngularFirestore) { }
+  constructor(private store: Store<fromApp.AppState>, private afs: AngularFirestore, private cp: CurrencyPipe) { }
 
   ngOnInit() {
     this.selectedBazaar$ = this.store.select(fromApp.getSelectedBazaar);
@@ -58,19 +69,23 @@ export class ReportComponent implements OnInit {
               };
             }
 
+            // 1 Verkäufernummer
             // add to pricelist
             res1[item.vendor].price.push(item.price);
             // calc sum
             res1[item.vendor].sum += item.price;
-            // fee
+            // 3 fee
             res1[item.vendor].fee = bazaar.fee;
-            // margin
+            // 3 margin
             res1[item.vendor].margin = bazaar.margin;
-            // calc pay off
+            // 2 calc pay off
+            let val = this.cp.transform((res1[item.vendor].sum - (res1[item.vendor].sum * bazaar.margin / 100) - bazaar.fee), '€', 'code', '1.2-2');
+            console.log('val: ', val);
             res1[item.vendor].payoff = res1[item.vendor].sum - (res1[item.vendor].sum * bazaar.margin / 100) - bazaar.fee;
+            console.log('payoff: ', res1[item.vendor].sum - (res1[item.vendor].sum * bazaar.margin / 100) - bazaar.fee);
+
 
           }
-
 
           for (let index = 1; index <= bazaar.nbOfVendors; index++) {
             if (!res1[index]) {
@@ -94,7 +109,33 @@ export class ReportComponent implements OnInit {
   }
 
   download() {
-    new Angular5Csv(this.vendorItems, 'Basar', this.options);
+    // 'Verkäufer',
+    // 'Auszahlungsbetrag (€)',
+    // 'Etikettengebühr',
+    // 'Verkäufernummer',
+    // 'Kasse - Auszahlung',
+    // 'Kasse - Marge (%)',
+    // 'Kasse - Summe (€)',
+    // 'Kasse - Einzelpositionen (€)'
+
+    let dlItem = [];
+    for (let i = 0; i < this.vendorItems.length; i++) {
+
+      dlItem[i] = {
+        name: 'Ersetzen durch Name des Verkäufers',
+        payoff: this.cp.transform(this.vendorItems[i].payoff, '€', 'code', '1.2-2'),
+        fee: this.vendorItems[i].fee,
+        vendor: this.vendorItems[i].vendor,
+        payoff1: this.cp.transform(this.vendorItems[i].payoff, '€', 'code', '1.2-2'),
+        margin: this.vendorItems[i].margin,
+        sum: this.cp.transform(this.vendorItems[i].sum, '€', 'code', '1.2-2'),
+        price: this.vendorItems[i].price
+      }
+
+
+    };
+
+    new Angular5Csv(dlItem, 'Basar', this.options);
   }
 
 

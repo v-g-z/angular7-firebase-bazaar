@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -33,6 +33,7 @@ import { environment } from '../../environments/environment';
     ReactiveFormsModule
   ],
   providers: [
+    CurrencyPipe
   ]
 })
 export class SharedModule { }
