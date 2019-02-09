@@ -35,7 +35,7 @@ export class BazaarEffects {
                 }));
         }),
         map(arr => {
-            console.log(arr);
+            // console.log(arr);
             return new BazaarActions.AddAll(arr);
         }));
 
@@ -44,14 +44,14 @@ export class BazaarEffects {
         // map((action) => action.type ), 
         switchMap((action: BazaarActions.CreateBazaar) => {
             this.store.dispatch(new UIActions.StartLoading());
-            console.log('in create effect', action.payload);
+            // console.log('in create effect', action.payload);
             // const ref = this.afs.doc<IBazaarId>(`bazaars/${pizza.id}`)
             const ref = this.afs.collection<IBazaarId>('bazaars');
             return ref.add(action.payload);
         }),
         delay(2000),
         map((reference) => {
-            console.log('reference craete', reference.id); // documentID
+            // console.log('reference craete', reference.id); // documentID
             this.store.dispatch(new SnackbarActions.SnackbarOpen({
                 message: 'Sehr gut! Du hast deinen Bazaar erfolgreich angelegt!!'
             }));
@@ -70,13 +70,13 @@ export class BazaarEffects {
             this.store.dispatch(new UIActions.StartLoading());
             
             const ref = this.afs.doc<IBazaarId>(`bazaars/${action.payload.id}`);
-            console.log('action.payload.id', action.payload.id);
+            // console.log('action.payload.id', action.payload.id);
             ref.update(action.payload.data);
             return [action.payload.id];
         }),
         delay(2000),
         map((reference) => {
-            console.log('reference', reference);
+            // console.log('reference', reference);
             this.store.dispatch(new SnackbarActions.SnackbarOpen({
                 message: 'Aktualisierung erfolgreich'
             }));
