@@ -79,12 +79,7 @@ export class ReportComponent implements OnInit {
             // 3 margin
             res1[item.vendor].margin = bazaar.margin;
             // 2 calc pay off
-            let val = this.cp.transform((res1[item.vendor].sum - (res1[item.vendor].sum * bazaar.margin / 100) - bazaar.fee), '€', 'code', '1.2-2');
-            console.log('val: ', val);
             res1[item.vendor].payoff = res1[item.vendor].sum - (res1[item.vendor].sum * bazaar.margin / 100) - bazaar.fee;
-            console.log('payoff: ', res1[item.vendor].sum - (res1[item.vendor].sum * bazaar.margin / 100) - bazaar.fee);
-
-
           }
 
           for (let index = 1; index <= bazaar.nbOfVendors; index++) {
@@ -96,8 +91,6 @@ export class ReportComponent implements OnInit {
               };
             }
           }
-
-          // console.log('res1', res1.filter(n => n));
 
           this.vendorItems = res1.filter(n => n);
 
@@ -117,26 +110,30 @@ export class ReportComponent implements OnInit {
     // 'Kasse - Marge (%)',
     // 'Kasse - Summe (€)',
     // 'Kasse - Einzelpositionen (€)'
+    this.selectedBazaar$.subscribe(bazaar => {
 
-    let dlItem = [];
-    for (let i = 0; i < this.vendorItems.length; i++) {
+      if (bazaar) {
 
-      dlItem[i] = {
-        name: 'Ersetzen durch Name des Verkäufers',
-        payoff: this.cp.transform(this.vendorItems[i].payoff, '€', 'code', '1.2-2'),
-        fee: this.vendorItems[i].fee,
-        vendor: this.vendorItems[i].vendor,
-        payoff1: this.cp.transform(this.vendorItems[i].payoff, '€', 'code', '1.2-2'),
-        margin: this.vendorItems[i].margin,
-        sum: this.cp.transform(this.vendorItems[i].sum, '€', 'code', '1.2-2'),
-        price: this.vendorItems[i].price
+        let dlItem = [];
+        for (let i = 0; i < this.vendorItems.length; i++) {
+
+          dlItem[i] = {
+            name: 'Ersetzen durch Name des Verkäufers',
+            payoff: this.cp.transform(this.vendorItems[i].payoff, '€', 'code', '1.2-2'),
+            fee: bazaar.fee,
+            vendor: this.vendorItems[i].vendor,
+            payoff1: this.cp.transform(this.vendorItems[i].payoff, '€', 'code', '1.2-2'),
+            margin: bazaar.margin,
+            sum: this.cp.transform(this.vendorItems[i].sum, '€', 'code', '1.2-2'),
+            price: this.vendorItems[i].price
+          }
+
+
+        };
+
+        new Angular5Csv(dlItem, 'Basar', this.options);
       }
-
-
-    };
-
-    new Angular5Csv(dlItem, 'Basar', this.options);
+    });
   }
-
 
 }
