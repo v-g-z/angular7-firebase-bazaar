@@ -53,12 +53,13 @@ export class InviteComponent implements OnInit {
       itemDoc.update({
         access: firebase.firestore.FieldValue.arrayUnion(this.inviteForm.value.email)
       }).then(() => {
-        this.initForm();
+        this.inviteForm.reset();
+        // this.initForm();
         this.store.dispatch(new BazaarActions.FindAndSelectBazaar(bazaar.id));
       }).catch(function (error) {
         console.error('Ooops, da ist was schief gelaufen...', error);
       });
-    });
+    }).unsubscribe();
 
   }
 
@@ -69,12 +70,13 @@ export class InviteComponent implements OnInit {
       itemDoc.update({
         access: firebase.firestore.FieldValue.arrayRemove(item)
       }).then(() => {
-        this.initForm();
+        this.inviteForm.reset();
+        // this.initForm();
         this.store.dispatch(new BazaarActions.FindAndSelectBazaar(bazaar.id));
       }).catch(function (error) {
         console.error('Ooops, da ist was schief gelaufen...', error);
       });
-    });
+    }).unsubscribe();
   }
 
 
