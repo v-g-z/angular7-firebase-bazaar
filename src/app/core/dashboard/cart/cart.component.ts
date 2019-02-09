@@ -56,11 +56,11 @@ export class CartComponent implements OnInit, AfterViewInit {
       }
     });
     // setTimeout(() => this.simulate(), 5000);
-
+    this.vendorField.nativeElement.focus();
   }
 
   ngAfterViewInit() {
-    this.vendorField.nativeElement.focus();
+    // this.renderer.invokeElementMethod(this.vendorField.nativeElement, 'focus');
   }
 
 
