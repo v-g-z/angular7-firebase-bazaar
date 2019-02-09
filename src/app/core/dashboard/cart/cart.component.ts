@@ -16,6 +16,7 @@ import { ICartItem } from '../../models/cart-items.model';
 })
 export class CartComponent implements OnInit, AfterViewInit {
   @ViewChild("vendor") vendorField: ElementRef;
+  @ViewChild("price") priceField: ElementRef;
 
   cartForm: FormGroup;
   bazaarId: String;
@@ -88,7 +89,24 @@ export class CartComponent implements OnInit, AfterViewInit {
     setTimeout(() => this.simulate(), 5000);
   }
 
-  _keyDown(event: any) {
+  onKeyDownVendor(event: any) {
+    const pattern = /[0-9]/;
+    if (event.keyCode === 8 || event.keyCode === 13) {
+      return;
+    }
+
+    // Tab
+    if (event.keyCode === 9) {
+      this.priceField.nativeElement.focus();
+    }
+
+    if (!pattern.test(event.key)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+  }
+
+  onKeyDownPrice(event: any) {
     const pattern = /[0-9\,\ ]/;
     console.log('code', event);
     if (event.keyCode === 8 || event.keyCode === 13) {
