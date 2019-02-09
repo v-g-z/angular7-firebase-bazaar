@@ -131,9 +131,10 @@ export class ReportComponent implements OnInit {
 
         };
 
-        new Angular5Csv(dlItem, 'Basar', this.options);
+        new Angular5Csv(dlItem, bazaar.title, this.options);
       }
     });
   }
+
 
 }
