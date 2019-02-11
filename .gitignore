@@ -17,6 +17,15 @@
 .settings/
 *.sublime-workspace
 
+# firebase
+/public
+/.firebase
+.firebaserc
+database.rules.json
+firebase.json
+firestore.indexes.json
+firestore.rules
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
@@ -33,6 +42,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+/src/environments
 
 # System Files
 .DS_Store
